@@ -25,8 +25,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-
-                <a class="navbar-brand" href="{{ url('/home') }}">
+                <a class="navbar-brand" href="{{ url('/post') }}">
                     <img src="{{ asset('/img/titleLogo1.png') }}" alt="">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"

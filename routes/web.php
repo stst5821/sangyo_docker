@@ -22,6 +22,7 @@ Route::get('/', function () {
 // ['verify' => true]をつけて、メール認証を有効にする。
 Auth::routes(['verify' => true]);
 
+// indexは省略してアクセスできるようにするのが一般的なので、/home/indexとはせず、/homeだけにしている。
 Route::get('/home', 'HomeController@index')->name('home');
 
 // パスワード変更
@@ -36,3 +37,10 @@ Route::get('/setting', 'SettingController@index')->name('setting');
 
 Route::get('/setting/name','SettingController@showChangeNameForm')->name('name.form');
 Route::post('/setting/name','SettingController@ChangeName')->name('name.change');
+
+// 投稿一覧
+
+// Route::get('post', 'PostsController@index');
+// Route::get('show', 'PostsController@show')->name('post.show');
+
+Route::resource('post', 'PostsController', ['only' => ['index', 'show','create','store']]);
