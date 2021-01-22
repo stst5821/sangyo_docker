@@ -23,19 +23,6 @@
 
                 <div class="form-group">
                     <label for="subject">
-                        名前
-                    </label>
-                    <input id="name" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                        value="{{ old('name') }}" type="text">
-                    @if ($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
-                    </div>
-                    @endif
-                </div>
-
-                <div class="form-group">
-                    <label for="subject">
                         カテゴリー
                     </label>
                     <input id="category_id" name="category_id"
@@ -50,7 +37,7 @@
 
                 <div class="form-group">
                     <label for="subject">
-                        件名
+                        お題
                     </label>
                     <input id="subject" name="subject"
                         class="form-control {{ $errors->has('subject') ? 'is-invalid' : '' }}"
@@ -64,15 +51,30 @@
 
                 <div class="form-group">
                     <label for="message">
-                        メッセージ
+                        3行で説明！！！
                     </label>
 
-                    <textarea id="message" name="message"
-                        class="form-control {{ $errors->has('message') ? 'is-invalid' : '' }}"
-                        rows="4">{{ old('message') }}</textarea>
-                    @if ($errors->has('message'))
+                    <input id="body1" name="body1" class="form-control {{ $errors->has('body1') ? 'is-invalid' : '' }}"
+                        rows="4" value="{{ old('body1') }}" type="text">
+
+                    @if ($errors->has('body1'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('message') }}
+                        {{ $errors->first('body1') }}
+                    </div>
+                    @endif
+
+                    <input id="body2" name="body2" class="form-control {{ $errors->has('body2') ? 'is-invalid' : '' }}"
+                        rows="4" value="{{ old('body2') }}" type="text">
+                    @if ($errors->has('body2'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('body2') }}
+                    </div>
+                    @endif
+                    <input id="body3" name="body3" class="form-control {{ $errors->has('body3') ? 'is-invalid' : '' }}"
+                        rows="4" value="{{ old('body3') }}" type="text">
+                    @if ($errors->has('body3'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('body3') }}
                     </div>
                     @endif
                 </div>

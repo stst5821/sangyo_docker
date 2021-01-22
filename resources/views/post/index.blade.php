@@ -40,7 +40,8 @@
                 <th>カテゴリ</th>
                 <th>作成日時</th>
                 <th>名前</th>
-                <th>件名</th>
+                <th>お題</th>
+                <th>body1</th>
                 <th>メッセージ</th>
                 <th>処理</th>
             </tr>
@@ -51,8 +52,12 @@
                 <td>{{ $post->id }}</td>
                 <td>{{ $post->category->name }}</td>
                 <td>{{ $post->created_at->format('Y.m.d') }}</td>
-                <td>{{ $post->name }}</td>
+                <!-- Post.phpで作ったgetUserNameメソッドで、ユーザー名を取得する。 -->
+                <td>{{ $post->getUserName() }}</td>
                 <td>{{ $post->subject }}</td>
+                <td>・{{ $post->body1 }}<br>
+                    ・{{ $post->body2 }}<br>
+                    ・{{ $post->body3 }}</td>
                 <td>{!! nl2br(e(Str::limit($post->message, 100))) !!}
                     @if ($post->comments->count() >= 1)
                     <p><span class="badge badge-primary">コメント：{{ $post->comments->count() }}件</span></p>
