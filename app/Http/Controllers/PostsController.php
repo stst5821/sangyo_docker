@@ -60,4 +60,29 @@ class PostsController extends Controller
 
         return redirect('/post')->with('poststatus','新規投稿しました');
     }
+
+    public function edit($post_id)
+    {
+        $post = Post::findOrFail($post_id);
+        return view('post.edit',['post' => $post]);
+    }
+
+    public function update(PostRequest $request)
+    {
+        $auth = Auth::user();
+
+        $savedata = [
+            'user_id' => $auth->id,
+            'subject' => $request->subject,
+            'body1' => $request->body1,
+            'body2' => $request->body2,
+            'body3' => $request->body3,
+            'category_id' => $request->category_id,
+        ];
+
+        $post = new Post;
+        $post->fill($savedata)->save();
+
+        return redirect('/post')->with('poststatus', '投稿を編集しました');
+    }
 }

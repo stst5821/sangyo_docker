@@ -58,9 +58,10 @@
                     ・{{ $post->body2 }}<br>
                     ・{{ $post->body3 }}</td>
                 <td class="text-nowrap">
+                    <!-- $post->idでURLパラメータを送っている。 -->
                     <p><a href="{{ action('PostsController@show', $post->id) }}" class="btn btn-primary btn-sm">詳細</a>
                     </p>
-                    <p><a href="" class="btn btn-info btn-sm">編集</a></p>
+                    <p><a href="{{ action('PostsController@edit', $post->id) }}" class="btn btn-info btn-sm">編集</a></p>
                     <p><a href="" class="btn btn-danger btn-sm">削除</a></p>
                 </td>
             </tr>

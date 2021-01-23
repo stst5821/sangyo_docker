@@ -38,9 +38,9 @@ Route::get('/setting', 'SettingController@index')->name('setting');
 Route::get('/setting/name','SettingController@showChangeNameForm')->name('name.form');
 Route::post('/setting/name','SettingController@ChangeName')->name('name.change');
 
-// 投稿一覧
+// 投稿
 
-Route::resource('post', 'PostsController', ['only' => ['index', 'show','create','store']]);
+Route::resource('post', 'PostsController', ['only' => ['index', 'show','create','store','edit','update']]);
 
 // コメント
 
