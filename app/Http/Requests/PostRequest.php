@@ -24,7 +24,6 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required',
             'subject' => 'required|max:80',
             'body1' => 'required|max:15',
             'body2' => 'required|max:15',
@@ -40,7 +39,9 @@ class PostRequest extends FormRequest
             'name.max' => '名前は40文字以内で入力してください',
             'subject.required' => '件名を入力してください',
             'subject.max' => '件名は80文字以内で入力してください',
-            'message.required' => 'メッセージを入力してください',
+            'body1.required' => '文字を入力してください',
+            'body2.required' => '文字を入力してください',
+            'body3.required' => '文字を入力してください',
             'message.max' => 'メッセージは350文字以内で入力してください',
             'category_id.required' => 'カテゴリーを選択してください',
             'category_id.integer' => 'カテゴリーの入力形式が不正です',

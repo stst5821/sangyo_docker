@@ -41,8 +41,7 @@
                 <th>作成日時</th>
                 <th>名前</th>
                 <th>お題</th>
-                <th>body1</th>
-                <th>メッセージ</th>
+                <th>本文</th>
                 <th>処理</th>
             </tr>
         </thead>
@@ -58,11 +57,6 @@
                 <td>・{{ $post->body1 }}<br>
                     ・{{ $post->body2 }}<br>
                     ・{{ $post->body3 }}</td>
-                <td>{!! nl2br(e(Str::limit($post->message, 100))) !!}
-                    @if ($post->comments->count() >= 1)
-                    <p><span class="badge badge-primary">コメント：{{ $post->comments->count() }}件</span></p>
-                    @endif
-                </td>
                 <td class="text-nowrap">
                     <p><a href="{{ action('PostsController@show', $post->id) }}" class="btn btn-primary btn-sm">詳細</a>
                     </p>

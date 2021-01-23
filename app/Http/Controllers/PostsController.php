@@ -41,7 +41,7 @@ class PostsController extends Controller
         return view('post.create', ['auth' => $auth]);
     }
 
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         $auth = Auth::user();
         // 複数の入力データを配列にまとめる。

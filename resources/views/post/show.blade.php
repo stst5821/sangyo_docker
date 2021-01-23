@@ -18,21 +18,24 @@
     </div>
 
     <div class="border p-4">
+
         <!-- 件名 -->
         <h1 class="h4 mb-4">
             {{ $post->subject }}
         </h1>
 
-        <!-- 投稿情報 -->
-        <div class="summary">
-            <p><span>{{ $post->name }}</span> / <time>{{ $post->updated_at->format('Y.m.d H:i') }}</time> /
-                カテゴリ：{{ $post->category->name }} / ID:{{ $post->id }}</p>
-        </div>
-
         <!-- 本文 -->
         <p class="mb-5">
-            {!! nl2br(e($post->message)) !!}
+            ・{!! nl2br(e($post->body1)) !!}<br>
+            ・{!! nl2br(e($post->body2)) !!}<br>
+            ・{!! nl2br(e($post->body3)) !!}
         </p>
+
+        <!-- 投稿情報 -->
+        <div class="summary">
+            <p><span>{{ $post->getUserName() }}</span> / <time>{{ $post->updated_at->format('Y.m.d H:i') }}</time> /
+                カテゴリ：{{ $post->category->name }} / ID:{{ $post->id }}</p>
+        </div>
 
         <section>
             <h2 class="h5 mb-4">
