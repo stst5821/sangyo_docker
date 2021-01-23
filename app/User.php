@@ -18,6 +18,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Post');
     }
 
+    public function comment()
+    {
+        return $this->hasMany('App\Comment');
+    }
+
     /**
      * The attributes that are mass assignable.
      *

@@ -17,6 +17,13 @@
         <a href="{{route('post.index')}}" class="btn btn-info">一覧に戻る</a>
     </div>
 
+    <!-- コメント投稿のフラッシュメッセージ -->
+    @if (session('commentstatus'))
+    <div class="alert alert-success mt-4 mb-4">
+        {{ session('commentstatus') }}
+    </div>
+    @endif
+
     <div class="border p-4">
 
         <!-- 件名 -->
@@ -45,7 +52,8 @@
             @forelse($post->comments as $comment)
             <div class="border-top p-4">
                 <time class="text-secondary">
-                    {{ $post->getUserName() }} /
+
+                    {{ $comment->getUserName() }} /
                     {{ $comment->created_at->format('Y.m.d H:i') }} /
                     ID:{{ $comment->id }}
                 </time>
@@ -85,12 +93,6 @@
                 </button>
             </div>
         </form>
-
-        @if (session('commentstatus'))
-        <div class="alert alert-success mt-4 mb-4">
-            {{ session('commentstatus') }}
-        </div>
-        @endif
 
         @else
         <p>ログインするとコメントができます。</p>
