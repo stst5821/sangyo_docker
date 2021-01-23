@@ -11,4 +11,9 @@ class Comment extends Model
         // コメントは1つの投稿に所属する
         return $this->belongsTo('App\Post');
     }
+
+    protected $fillable = [
+        'post_id',
+        'comment',
+    ];
 }

@@ -40,7 +40,8 @@ Route::post('/setting/name','SettingController@ChangeName')->name('name.change')
 
 // 投稿一覧
 
-// Route::get('post', 'PostsController@index');
-// Route::get('show', 'PostsController@show')->name('post.show');
-
 Route::resource('post', 'PostsController', ['only' => ['index', 'show','create','store']]);
+
+// コメント
+
+Route::resource('comment', 'CommentsController',['only' => ['store']]);
