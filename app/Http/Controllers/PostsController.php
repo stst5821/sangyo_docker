@@ -15,16 +15,15 @@ class PostsController extends Controller
 {
     public function __construct()
     {
-        // ログインしてなくても、投稿一覧と詳細は見られるようにする。
         $this->middleware('auth')->except('index','show');
     }
 
     public function index()
     {
+        $auth = Auth::user();
         // joinする postとuser 
-        // $posts = Post::join('users', 'users.id', '=', 'posts.user_id')->paginate(10);
         $posts = Post::orderBy('created_at', 'desc')->paginate(10);
-        return view('post.index',['posts' => $posts]);
+        return view('post.index',['posts' => $posts, 'auth' => $auth]);
     }
 
     public function show(Request $request,$id)
@@ -67,13 +66,14 @@ class PostsController extends Controller
         return redirect('/post')->with('poststatus','新規投稿しました');
     }
 
-    public function edit($post_id)
+    public function edit($id)
     {
-        $post = Post::findOrFail($post_id);
         $category = new Category;
-        
+        $categories = $category->getLists();
+
         // prependメソッドで、配列の先頭に任意の項目を追加。必ず配列の最初に追加される。prepend(値,キー)
-        $categories = $category->getLists()->prepend('選択',0);
+        $post = Post::findOrFail($id);
+        $this->authorize('update', $post); // PostPolicyのupdateメソッドに書いた条件で認可する。
         return view('post.edit',['categories' => $categories, 'post' => $post]);
     }
 

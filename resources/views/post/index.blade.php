@@ -63,8 +63,11 @@
                     </p>
                     <!-- ログインしているときだけ、編集・削除ボタンを表示させる。 -->
                     @if(Auth::check())
+
+                    <!-- ログインユーザーが投稿した記事のみ編集と削除ができる -->
                     <!-- 編集はedit画面に飛ばす処理なので、hrefを使う。 -->
                     <p><a href="{{ action('PostsController@edit', $post->id) }}" class="btn btn-info btn-sm">編集</a></p>
+
                     <!-- 削除は、画面遷移なしでそのままdestroyアクションを実行するので、formメソッドを使う -->
                     <form method="POST" action=" {{ action('PostsController@destroy', $post->id) }}">
                         @csrf
