@@ -17,6 +17,23 @@
         <a href="{{route('post.index')}}" class="btn btn-info">一覧に戻る</a>
     </div>
 
+
+    <div class="mb-4 text-right">
+
+        <!-- 編集ボタン -->
+        <a href="{{ action('PostsController@edit', $post->id) }}" class="btn btn-info">
+            編集する
+        </a>
+
+        <!-- 削除ボタン -->
+        <form style="display: inline-block;" method="POST" action="{{ action('PostsController@destroy', $post->id) }}">
+            @csrf
+            @method('DELETE')
+            <button class="btn btn-danger">削除する</button>
+        </form>
+
+    </div>
+
     <!-- コメント投稿のフラッシュメッセージ -->
     @if (session('commentstatus'))
     <div class="alert alert-success mt-4 mb-4">

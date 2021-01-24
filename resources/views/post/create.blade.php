@@ -25,14 +25,14 @@
                     <label for="subject">
                         カテゴリー
                     </label>
-                    <input id="category_id" name="category_id"
+
+                    <select id="category_id" name="category_id"
                         class="form-control {{ $errors->has('category_id') ? 'is-invalid' : '' }}"
-                        value="{{ old('category_id') }}" type="text">
-                    @if ($errors->has('category_id'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('category_id') }}
-                    </div>
-                    @endif
+                        value="{{ old('category_id') }}">
+                        @foreach($categories as $id => $name)
+                        <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="form-group">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Category;
 use App\User;
 // PostRequestの使用宣言
 use App\Http\Requests\PostRequest;
@@ -37,8 +38,13 @@ class PostsController extends Controller
 
     public function create()
     {
+        // ログインしているユーザーの情報をcreate.viewに送っている。
         $auth = Auth::user();
-        return view('post.create', ['auth' => $auth]);
+        $category = new Category;
+        
+        // prependメソッドで、配列の先頭に任意の項目を追加。必ず配列の最初に追加される。prepend(値,キー)
+        $categories = $category->getLists()->prepend('選択',0);
+        return view('post.create',['categories' => $categories, 'auth' => $auth]);
     }
 
     public function store(PostRequest $request)
@@ -64,7 +70,11 @@ class PostsController extends Controller
     public function edit($post_id)
     {
         $post = Post::findOrFail($post_id);
-        return view('post.edit',['post' => $post]);
+        $category = new Category;
+        
+        // prependメソッドで、配列の先頭に任意の項目を追加。必ず配列の最初に追加される。prepend(値,キー)
+        $categories = $category->getLists()->prepend('選択',0);
+        return view('post.edit',['categories' => $categories, 'post' => $post]);
     }
 
     public function update(PostRequest $request)
@@ -84,5 +94,14 @@ class PostsController extends Controller
         $post->fill($savedata)->save();
 
         return redirect('/post')->with('poststatus', '投稿を編集しました');
+    }
+
+    public function destroy($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->comments()->delete(); // コメント削除。Post,commentモデルでリレーション設定をしているので削除できる。
+        $post->delete(); // 投稿の削除
+
+        return redirect('/post')->with('poststatus','投稿を削除しました。');
     }
 }

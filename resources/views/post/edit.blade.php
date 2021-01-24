@@ -18,6 +18,7 @@
 
         <form method="POST" action="{{ route('post.update', $post->id) }}">
             @csrf
+            <!-- 疑似フォームメソッド。LaravelのRESTコントローラでは、updateはPATCH(PUT)が対応しているので、PUTにする。 -->
             @method('PUT')
             <fieldset class="mb-4">
 
@@ -25,14 +26,15 @@
                     <label for="subject">
                         カテゴリー
                     </label>
-                    <input id="category_id" name="category_id"
+
+                    <select id="category_id" name="category_id"
                         class="form-control {{ $errors->has('category_id') ? 'is-invalid' : '' }}"
-                        value="{{ old('category_id') ?: $post->category_id }}" type="text">
-                    @if ($errors->has('category_id'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('category_id') }}
-                    </div>
-                    @endif
+                        value="{{ old('category_id') }}">
+                        @foreach($categories as $id => $name)
+                        <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select>
+
                 </div>
 
                 <div class="form-group">

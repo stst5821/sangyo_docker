@@ -61,8 +61,16 @@
                     <!-- $post->idでURLパラメータを送っている。 -->
                     <p><a href="{{ action('PostsController@show', $post->id) }}" class="btn btn-primary btn-sm">詳細</a>
                     </p>
+                    <!-- ログインしているときだけ、編集・削除ボタンを表示させる。 -->
+                    @if(Auth::check())
+                    <!-- 編集はedit画面に飛ばす処理なので、hrefを使う。 -->
                     <p><a href="{{ action('PostsController@edit', $post->id) }}" class="btn btn-info btn-sm">編集</a></p>
-                    <p><a href="" class="btn btn-danger btn-sm">削除</a></p>
+                    <!-- 削除は、画面遷移なしでそのままdestroyアクションを実行するので、formメソッドを使う -->
+                    <form method="POST" action=" {{ action('PostsController@destroy', $post->id) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger btn-sm">削除</a>
+                            @endif
                 </td>
             </tr>
             @endforeach

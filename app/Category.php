@@ -11,4 +11,11 @@ class Category extends Model
         // カテゴリは複数の投稿を持つ
         return $this->hasMany('App\Post');
     }
+
+    public function getLists()
+    {
+        // pluck()メソッドで特定のキーのみ取得できる。
+        $categories = Category::orderBy('id','asc')->pluck('name', 'id');
+        return $categories;
+    }
 }

@@ -40,7 +40,7 @@ Route::post('/setting/name','SettingController@ChangeName')->name('name.change')
 
 // 投稿
 
-Route::resource('post', 'PostsController', ['only' => ['index', 'show','create','store','edit','update']]);
+Route::resource('post', 'PostsController', ['only' => ['index', 'show','create','store','edit','update','destroy']]);
 
 // コメント
 
