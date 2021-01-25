@@ -56,8 +56,15 @@
                         3行で説明！！！
                     </label>
 
-                    <input id="body1" name="body1" class="form-control {{ $errors->has('body1') ? 'is-invalid' : '' }}"
-                        rows="4" value="{{ old('body1') }}" type="text">
+
+                    <div id="app1">
+                        <p>
+                            <input v-model="myText" id="body1" name="body1"
+                                class="form-control {{ $errors->has('body1') ? 'is-invalid' : '' }}" rows="4"
+                                value="{{ old('body1') }}" type="text">
+                        </p>
+                        <p v-bind:style="{color: computedColor}">残り@{{ remaining }}文字</p>
+                    </div>
 
                     @if ($errors->has('body1'))
                     <div class="invalid-feedback">
@@ -94,6 +101,7 @@
         </form>
     </div>
 </div>
+
 @endsection
 
 @include('layouts.postfooter')

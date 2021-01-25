@@ -27,6 +27,26 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
+
+
+var app = new Vue({
+    el: '#app1',
+    data: {
+        myText: ''
+    },
+    computed: {
+        remaining: function () {
+            return 15 - this.myText.length;
+        },
+        computedColor: function () {
+            col = '#33a';
+            if (this.remaining < 5) {
+                col = '#3a3';
+            }
+            if (this.remaining < 1) {
+                col = '#a33';
+            }
+            return col;
+        }
+    }
 });

@@ -91,6 +91,10 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- vue.jsのCDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="{{ mix('/js/app.js') }}"></script>
 </body>
 
 </html>
