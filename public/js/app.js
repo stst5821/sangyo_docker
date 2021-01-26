@@ -1969,11 +1969,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    data: {}
+  },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    console.log("Component mounted.");
   }
 });
 
@@ -37569,32 +37570,23 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v(_vm._s(_vm.data.header))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _vm._v(_vm._s(_vm.data.body))
           ])
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -49778,25 +49770,61 @@ module.exports = function(module) {
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]); // bodyの文字数をリアルタイムで表示する。
+// 3行分それぞれ書いたけど、まとめる方法があると思うんだよね。。。
+// バリデーションの後、入力したデータがdata:{myText}:''で上書きされて消えてしまう。
+// 対処法不明。
 
 var app = new Vue({
   el: '#app1',
+  data: {
+    myText: ''
+  },
+  computed: {
+    remaining: function remaining() {
+      return 15 - this.myText.length;
+    },
+    computedColor: function computedColor() {
+      col = '#33a';
+
+      if (this.remaining < 5) {
+        col = '#3a3';
+      }
+
+      if (this.remaining < 1) {
+        col = '#a33';
+      }
+
+      return col;
+    }
+  }
+});
+var app = new Vue({
+  el: '#app2',
+  data: {
+    myText: ''
+  },
+  computed: {
+    remaining: function remaining() {
+      return 15 - this.myText.length;
+    },
+    computedColor: function computedColor() {
+      col = '#33a';
+
+      if (this.remaining < 5) {
+        col = '#3a3';
+      }
+
+      if (this.remaining < 1) {
+        col = '#a33';
+      }
+
+      return col;
+    }
+  }
+});
+var app = new Vue({
+  el: '#app3',
   data: {
     myText: ''
   },

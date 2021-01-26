@@ -60,29 +60,53 @@
                         3行で説明！！！
                     </label>
 
-                    <input id="body1" name="body1" class="form-control {{ $errors->has('body1') ? 'is-invalid' : '' }}"
-                        rows="4" value="{{ old('body1') ?: $post->body1 }}" type="text">
+                    <!-- 1行目 -->
 
-                    @if ($errors->has('body1'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('body1') }}
-                    </div>
-                    @endif
+                    <div id="app1">
+                        <input v-model="myText" id="body1" name="body1"
+                            class="form-control {{ $errors->has('body1') ? 'is-invalid' : '' }}" rows="4" type="text">
 
-                    <input id="body2" name="body2" class="form-control {{ $errors->has('body2') ? 'is-invalid' : '' }}"
-                        rows="4" value="{{ old('body2')?: $post->body2 }}" type="text">
-                    @if ($errors->has('body2'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('body2') }}
+                        @if ($errors->has('body1'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('body1') }}
+                        </div>
+                        @endif
+                        <!-- @をつけないと、laravelのbladeの記述とかぶってしまって、エラーが出る。  -->
+                        <p v-bind:style="{color: computedColor}">@{{ remaining }}/15文字</p>
                     </div>
-                    @endif
-                    <input id="body3" name="body3" class="form-control {{ $errors->has('body3') ? 'is-invalid' : '' }}"
-                        rows="4" value="{{ old('body3')?: $post->body3 }}" type="text">
-                    @if ($errors->has('body3'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('body3') }}
+
+                    <!-- 2行目 -->
+
+                    <div id="app2">
+                        <input v-model="myText" id="body2" name="body2"
+                            class="form-control {{ $errors->has('body2') ? 'is-invalid' : '' }}" rows="4"
+                            value="{{ old('body2') }}" type="text">
+                        @if ($errors->has('body2'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('body2') }}
+                        </div>
+                        @endif
+                        <!-- @をつけないと、laravelのbladeの記述とかぶってしまって、エラーが出る。  -->
+                        <p v-bind:style="{color: computedColor}">@{{ remaining }}/15文字</p>
+
                     </div>
-                    @endif
+
+                    <!-- 3行目 -->
+
+                    <div id="app3">
+                        <input v-model="myText" id="body3" name="body3"
+                            class="form-control {{ $errors->has('body3') ? 'is-invalid' : '' }}" rows="4"
+                            value="{{ old('body3') }}" type="text">
+
+                        @if ($errors->has('body3'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('body3') }}
+                        </div>
+                        @endif
+                        <!-- @をつけないと、laravelのbladeの記述とかぶってしまって、エラーが出る。  -->
+                        <p v-bind:style="{color: computedColor}">@{{ remaining }}/15文字</p>
+                    </div>
+
                 </div>
 
                 <div class="mt-5">
