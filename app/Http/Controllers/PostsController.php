@@ -10,7 +10,6 @@ use App\User;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Auth;
 
-
 class PostsController extends Controller
 {
     public function __construct()
@@ -28,24 +27,12 @@ class PostsController extends Controller
         $category_id = $request->category_id;
         // 検索文字列を$searchwordに代入
         $searchword = $request->searchword;
-        // if文を使用した検索
-        // // $categoryに値が入っていたら、category_idで絞り込み。値が入っていなかったら、普通に検索。
-        // if(!is_null($category_id)) {
-        //     $posts = Post::where('category_id', $category_id)->orderBy('created_at', 'desc')->paginate(10);
-        // } else {
-        //     $posts = Post::orderBy('created_at', 'desc')->paginate(10);
-        // }
-        
-        // scopeを使用した検索
-        // Post.phpで、categoryAtメソッドを作って、$category_idに値が入っているかチェックする。
-        // こうすることで、↑のコードみたいにif文をコントローラに書く必要がなくなる。
 
-        
-
-        // postとuserテーブルを結合して検索ワードで絞り込みしている
-        $posts = Post::select()
-        ->join('users','users.id','=','posts.user_id')
-        ->where('username', 'like', "%$searchword%")
+        // usersテーブルにpostsテーブルをjoinして
+        $posts = User::select()
+        ->join('posts','posts.user_id','=','users.id')
+        ->nameAt($searchword)
+        ->categoryAt($category_id)
         ->orderBy('posts.created_at', 'desc')
         ->paginate(10);
         

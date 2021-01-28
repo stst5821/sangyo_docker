@@ -75,24 +75,31 @@
             @foreach ($posts as $post)
             <tr>
                 <td>{{ $post->id }}</td>
-                <td>{{ $post->category->name }}</td>
+                <td>{{ $post->category_id }}</td>
                 <td>{{ $post->created_at->format('Y.m.d') }}</td>
                 <!-- Post.phpで作ったgetUserNameメソッドで、ユーザー名を取得する。 -->
-                <td>{{ $post->getUserName() }}</td>
+                <td>{{ $post->username }}</td>
                 <td>{{ $post->subject }}</td>
                 <td>・{{ $post->body1 }}<br>
                     ・{{ $post->body2 }}<br>
                     ・{{ $post->body3 }}</td>
                 <td class="text-nowrap">
                     <!-- $post->idでURLパラメータを送っている。 -->
-                    <p><a href="{{ action('PostsController@show', $post->id) }}" class="btn btn-primary btn-sm">詳細</a>
+                    <p>
+                        <a href="{{ action('PostsController@show', $post->id) }}" class="btn btn-primary btn-sm">
+                            詳細
+                        </a>
                     </p>
                     <!-- ログインしているときだけ、編集・削除ボタンを表示させる。 -->
                     @if(Auth::check())
 
                     <!-- ログインユーザーが投稿した記事のみ編集と削除ができる -->
                     <!-- 編集はedit画面に飛ばす処理なので、hrefを使う。 -->
-                    <p><a href="{{ action('PostsController@edit', $post->id) }}" class="btn btn-info btn-sm">編集</a></p>
+                    <p>
+                        <a href="{{ action('PostsController@edit', $post->id) }}" class="btn btn-info btn-sm">
+                            編集
+                        </a>
+                    </p>
 
                     <!-- 削除は、画面遷移なしでそのままdestroyアクションを実行するので、formメソッドを使う -->
                     <form method="POST" action=" {{ action('PostsController@destroy', $post->id) }}">

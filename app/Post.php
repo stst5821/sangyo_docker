@@ -40,7 +40,13 @@ class Post extends Model
         return $this->user->username;
     }
 
-    // PostControllerのindexアクションのカテゴリで絞り込むために使う。
+    // ユーザーネームを拾ってくるメソッド
+    public function getCategoryName()
+    {
+        return $this->category->name;
+    }
+
+    // ローカルスコープ。PostControllerのindexアクションのカテゴリで絞り込むために使う。
     public function scopeCategoryAt($query, $category_id)
     {
         if (empty($category_id)) {
@@ -50,13 +56,12 @@ class Post extends Model
         return $query->where('category_id', $category_id);
     }
 
-    // 名前検索用のスコープ
-    public function scopeFuzzyName($query, $searchword)
+    public function scopeNameAt($query, $searchword)
     {
-        if(empty($searchword)) {
+        if (empty($searchword)) {
             return;
         }
-        // ここにpostのuser_idからuserテーブルのnameをだしたい
-        return $query->where('body1', 'like', "%{$searchword}%");
+        
+        return $query->where('username', 'like', "%{$searchword}%");
     }
 }

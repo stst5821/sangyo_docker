@@ -23,15 +23,28 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Comment');
     }
 
-        // 名前検索用のスコープ
-        public function scopeFuzzyName($query, $searchword)
-        {
-            if(empty($searchword)) {
-                return;
-            }
-            // ここにpostのuser_idからuserテーブルのnameをだしたい
-            return $query->union($user)->where('username', 'like', "%{$searchword}%");
+    public function category()
+    {
+        return $this->hasMany('App\Category');
+    }
+
+    // ローカルスコープ。PostControllerのindexアクションのカテゴリで絞り込むために使う。
+    public function scopeCategoryAt($query, $category_id)
+    {
+        if (empty($category_id)) {
+            return;
         }
+
+        return $query->where('category_id', $category_id);
+    }
+
+    public function scopeNameAt($query, $searchword)
+    {
+        if (empty($searchword)) {
+            return;
+        }
+        return $query->where('username', 'like', "%{$searchword}%");
+    }
 
     /**
      * The attributes that are mass assignable.
