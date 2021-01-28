@@ -18,12 +18,43 @@ class PostsController extends Controller
         $this->middleware('auth')->except('index','show');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $auth = Auth::user();
-        // joinする postとuser 
-        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
-        return view('post.index',['posts' => $posts, 'auth' => $auth]);
+        // カテゴリ取得
+        $category = new Category; // インスタンス作成
+        $categories = $category->getLists();
+
+        // requestされたカテゴリIDを$category_idに代入
+        $category_id = $request->category_id;
+        // 検索文字列を$searchwordに代入
+        $searchword = $request->searchword;
+        // if文を使用した検索
+        // // $categoryに値が入っていたら、category_idで絞り込み。値が入っていなかったら、普通に検索。
+        // if(!is_null($category_id)) {
+        //     $posts = Post::where('category_id', $category_id)->orderBy('created_at', 'desc')->paginate(10);
+        // } else {
+        //     $posts = Post::orderBy('created_at', 'desc')->paginate(10);
+        // }
+        
+        // scopeを使用した検索
+        // Post.phpで、categoryAtメソッドを作って、$category_idに値が入っているかチェックする。
+        // こうすることで、↑のコードみたいにif文をコントローラに書く必要がなくなる。
+
+        
+
+        // postとuserテーブルを結合して検索ワードで絞り込みしている
+        $posts = Post::select()
+        ->join('users','users.id','=','posts.user_id')
+        ->where('username', 'like', "%$searchword%")
+        ->orderBy('posts.created_at', 'desc')
+        ->paginate(10);
+        
+        return view('post.index',[
+            'posts' => $posts, 
+            'categories' => $categories, 
+            'category_id'=>$category_id,
+            'searchword' => $searchword
+            ]);
     }
 
     public function show(Request $request,$id)

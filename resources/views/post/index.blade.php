@@ -14,7 +14,33 @@
 
 
 <div class="table-responsive">
+
+    <!-- 検索フォーム -->
     <div class="mt-4 mb-4">
+        <form class="form-inline" method="GET" action="{{ route('post.index') }}">
+            <div class="form-group">
+                <input type="text" name="searchword" value="{{$searchword}}" class="form-control"
+                    placeholder="名前を入力してください">
+            </div>
+            <input type="submit" value="検索" class="btn btn-info ml-2">
+        </form>
+    </div>
+
+    <div class="mt-4 mb-4">
+        <p>{{ $posts->total() }}件が見つかりました。</p>
+    </div>
+
+    <div class="mt-4 mb-4">
+        @foreach($categories as $id => $name)
+        <span class="btn">
+            <a href="{{ route('post.index', ['category_id'=>$id]) }}" title="{{ $name }}">
+                {{ $name }}
+            </a>
+        </span>
+        @endforeach
+    </div>
+
+    <div class=" mt-4 mb-4">
         <!-- ログインしているときだけ、新規投稿ボタンを表示させる。 -->
         @if(Auth::check())
         <a href="{{ route('post.create') }}" class="btn btn-primary">
@@ -80,8 +106,13 @@
         </tbody>
     </table>
 
+
+
     <div class="d-flex justify-content-center mb-5">
-        {{ $posts->links() }}
+        {{ $posts->appends([
+        'category_id' => $category_id,
+        'searchword' => $searchword,
+        ])->links() }}
     </div>
 
 </div>

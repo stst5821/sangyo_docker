@@ -47,4 +47,6 @@ class PostRequest extends FormRequest
             'category_id.integer' => 'カテゴリーの入力形式が不正です',
         ];
     }
+
+
 }

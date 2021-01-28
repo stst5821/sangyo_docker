@@ -21,11 +21,6 @@ class Post extends Model
         // 投稿は1つのユーザーに所属する
         return $this->belongsTo('App\User');
     }
-
-    public function getUserName()
-    {
-        return $this->user->name;
-    }
     
     public function comments()
     {
@@ -37,5 +32,31 @@ class Post extends Model
     {
         // 投稿は1つのカテゴリを持つので、belongsTo 投稿はカテゴリに所属する。
         return $this->belongsTo('App\Category');
+    }
+
+    // ユーザーネームを拾ってくるメソッド
+    public function getUserName()
+    {
+        return $this->user->username;
+    }
+
+    // PostControllerのindexアクションのカテゴリで絞り込むために使う。
+    public function scopeCategoryAt($query, $category_id)
+    {
+        if (empty($category_id)) {
+            return;
+        }
+
+        return $query->where('category_id', $category_id);
+    }
+
+    // 名前検索用のスコープ
+    public function scopeFuzzyName($query, $searchword)
+    {
+        if(empty($searchword)) {
+            return;
+        }
+        // ここにpostのuser_idからuserテーブルのnameをだしたい
+        return $query->where('body1', 'like', "%{$searchword}%");
     }
 }
