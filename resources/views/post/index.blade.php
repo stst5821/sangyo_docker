@@ -75,7 +75,7 @@
             @foreach ($posts as $post)
             <tr>
                 <td>{{ $post->id }}</td>
-                <td>{{ $post->category_id }}</td>
+                <td>{{ $post->category->name }}</td>
                 <td>{{ $post->created_at->format('Y.m.d') }}</td>
                 <!-- Post.phpで作ったgetUserNameメソッドで、ユーザー名を取得する。 -->
                 <td>{{ $post->username }}</td>
@@ -94,19 +94,22 @@
                     @if(Auth::check())
 
                     <!-- ログインユーザーが投稿した記事のみ編集と削除ができる -->
+                    @can('update', $post)
                     <!-- 編集はedit画面に飛ばす処理なので、hrefを使う。 -->
                     <p>
                         <a href="{{ action('PostsController@edit', $post->id) }}" class="btn btn-info btn-sm">
                             編集
                         </a>
                     </p>
-
                     <!-- 削除は、画面遷移なしでそのままdestroyアクションを実行するので、formメソッドを使う -->
                     <form method="POST" action=" {{ action('PostsController@destroy', $post->id) }}">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger btn-sm">削除</a>
-                            @endif
+                    </form>
+                    @endcan
+                    @endif
+
                 </td>
             </tr>
             @endforeach

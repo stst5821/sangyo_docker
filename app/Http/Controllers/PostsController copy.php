@@ -29,11 +29,9 @@ class PostsController extends Controller
         $searchword = $request->searchword;
 
         // usersテーブルにpostsテーブルをjoinする
-        // select文の中で、posts.idというようにテーブル名を指定する。これをやらないと、usersテーブルのidとpostsテーブルのidが重複してしまう。
-        // 普通にusersのidが
-        $posts = Post::select('posts.id','users.username','category_id','user_id','subject','body1','body2','body3','posts.created_at','posts.updated_at')
-        ->join('users','posts.user_id','=','users.id')
-        ->nameAt($searchword) // 名前でワード検索
+        $posts = User::select()
+        ->join('posts','posts.user_id','=','users.id')
+        ->nameAt($searchword)
         ->categoryAt($category_id)
         ->orderBy('posts.created_at', 'desc')
         ->paginate(10);
@@ -119,8 +117,6 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
-        $this->authorize('destroy', $post); // PostPolicyのupdateメソッドに書いた条件で認可する。
-
         $post->comments()->delete(); // コメント削除。Post,commentモデルでリレーション設定をしているので削除できる。
         $post->delete(); // 投稿の削除
 

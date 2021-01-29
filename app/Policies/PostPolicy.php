@@ -63,9 +63,9 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function delete(User $user, Post $post)
+    public function destroy(User $user, Post $post)
     {
-        //
+        return $user->id === $post->user_id;
     }
 
     /**
