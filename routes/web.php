@@ -35,8 +35,13 @@ Route::post('/setting/deactive', 'Auth\DeactiveController@deactive')->name('deac
 
 Route::get('/setting', 'SettingController@index')->name('setting');
 
+// 氏名変更
 Route::get('/setting/name','SettingController@showChangeNameForm')->name('name.form');
 Route::post('/setting/name','SettingController@ChangeName')->name('name.change');
+
+// ユーザーネーム変更
+Route::get('/setting/username','SettingController@showChangeUserNameForm')->name('username.form');
+Route::post('/setting/username','SettingController@ChangeUserName')->name('username.change');
 
 // 投稿
 

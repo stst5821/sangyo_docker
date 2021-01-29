@@ -42,7 +42,7 @@
                             <div><i class="fas fa-chevron-right"></i></div>
                         </a>
 
-                        <a href="#"
+                        <a href="{{ route('username.form')}}"
                             class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                             <dl class="mb-0">
                                 <dt>{{ __('UserName') }}</dt>
