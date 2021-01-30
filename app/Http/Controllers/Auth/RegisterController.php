@@ -44,7 +44,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->whereNull('deleted_at'),],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            // usersとusernameで検索→delete_atがnullのものをさらに検索→ヒットしたら重複してしまうので通さない。
+            // usersのusernameで検索→delete_atがnullのものをさらに検索→ヒットしたら重複してしまうので通さない。
             'username' => ['required', 'string', 'max:32', Rule::unique('users', 'username')->whereNull('deleted_at'), 'regex:/^[a-zA-Z0-9-_]+$/'],
         ]);
     }

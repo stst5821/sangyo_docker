@@ -20,6 +20,7 @@ Route::get('/', function () {
 });
 
 // ['verify' => true]をつけて、メール認証を有効にする。
+// Auth\VerificationControllerにロジックがある。
 Auth::routes(['verify' => true]);
 
 // indexは省略してアクセスできるようにするのが一般的なので、/home/indexとはせず、/homeだけにしている。
@@ -42,6 +43,18 @@ Route::post('/setting/name','SettingController@ChangeName')->name('name.change')
 // ユーザーネーム変更
 Route::get('/setting/username','SettingController@showChangeUserNameForm')->name('username.form');
 Route::post('/setting/username','SettingController@ChangeUserName')->name('username.change');
+
+// メールアドレス変更
+Route::get('/setting/email','SettingController@showChangeMailForm')->name('email.form');
+Route::post('/setting/email','SettingController@ChangeEmail')->name('email.change');
+
+// 画像アップロード
+Route::get('/show','UploadImageController@show')->name('show.form');
+Route::post('/upload','UploadImageController@upload')->name('upload');
+
+// 画像一覧
+Route::get('/list','ImageListController@show')->name('image_list');
+
 
 // 投稿
 

@@ -1,4 +1,11 @@
 {
+    "Image_change": "画像変更",
+    "Your email has been changed.": "メールアドレスを変更しました。",
+    "Change Email": "メールアドレス変更",
+    "Email": "メールアドレス",
+    "Change": "変更する",
+    "userName": "ユーザーネーム",
+    "Change userName": "ユーザーネーム変更",
     "Verify Email Address": "メールアドレス認証",
     "Please click the button below to verify your email address.": "下のボタンをクリックして認証してください。",
     "If you did not create an account, no further action is required.": "このメールにお心当たりがない方は、恐れ入りますが、このメールを削除してください。",

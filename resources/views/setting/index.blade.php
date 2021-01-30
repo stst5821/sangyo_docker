@@ -53,7 +53,7 @@
                             @endif
                         </a>
 
-                        <a href="#" @if ($auth->email_verified_at)
+                        <a href="{{ route('email.form') }}" @if ($auth->email_verified_at)
                             class="list-group-item list-group-item-action d-flex justify-content-between
                             align-items-center"
                             @else
