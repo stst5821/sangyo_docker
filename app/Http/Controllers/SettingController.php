@@ -134,22 +134,29 @@ class SettingController extends Controller
 
         // 元から設定していた画像を、ストレージとDBから削除する。
         
-        $user = $auth = Auth::user();
+        $user = Auth::user();
         // Userのimg_idと、upload_imageテーブルのidを紐付け、レコードを取得する。
         $image_data = UploadImage::find($user->img_id);
         // 取得したupload_imageのレコードから、file_pathだけ取り出して$image_pathに代入する。
         $image_path = $image_data->file_path;
+
+        // 元の登録画像がデフォルト画像だった場合は、削除しない。
+        // 削除すると、ユーザー登録した際に設定するデフォルト画像が表示されなくなってしまう。
+        // 64は、デフォルト画像のid
+        if (!$image_data->id == 64){
         // ストレージのファイルを削除する。
         Storage::delete('public/' . $image_path);
-
         // upload_imageのレコードを削除する。
         UploadImage::where('id', $image_data->id)->delete();
-
+        } 
+        
         // 最初に保存した画像を取り出し、upload_imageのidカラムと、usersのimg_idカラムを紐付ける。
         
-         // 上記で保存した最新の画像を取得するため、created_atの降順で並べて、一番最初のコードだけ取ってくる。
+         // 上記で保存した最新の画像を取得するため、created_atの降順で並べて、一番最初のレコードだけ取ってくる。
         $image = UploadImage::orderBy('created_at', 'desc')->first();
+        // 取得したレコードのidを、usersテーブルのimg_idに入れる。
         $user->img_id = $image->id;
+        
         $user->save();
 
         return redirect( route('setting') );

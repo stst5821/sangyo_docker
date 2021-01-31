@@ -62,7 +62,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'username' => $data['username'],
-            'img_id' => 11 // デフォルトの画像を指定
+            'img_id' => 64 // デフォルトの画像を指定
         ]);
     }
 }

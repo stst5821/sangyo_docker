@@ -27,6 +27,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Category');
     }
+    
+
+
+
 
     // ローカルスコープ。PostControllerのindexアクションのカテゴリで絞り込むために使う。
     public function scopeCategoryAt($query, $category_id)
