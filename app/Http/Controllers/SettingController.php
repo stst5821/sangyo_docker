@@ -97,4 +97,44 @@ class SettingController extends Controller
         
         return redirect()->route('setting')->with('status', __('Your email has been changed.'));
     }
+
+    // アイコン画像
+
+    function imageshow() 
+    {
+        return view("upload_form");
+    }
+
+    function upload(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|file|image|mimes:png,jpeg'
+        ]);
+
+        $upload_img = $request->file('image');
+
+        if($upload_img) {
+            // アップロードされた画像をstore関数を使って保存する
+            // store関数を使うと、ファイル名がランダムになる。ファイル名を指定したい場合はstoreAs()関数を利用
+            $path = $upload_img->store('uploads',"public");
+            // 画像の保存に成功したらDBに記録する
+            if($path){
+                // DBに記録する。
+                UploadImage::create([
+                    // getClientOriginalName()でアップロードした元のファイル名が取得できるので、それをfile_nameに代入。
+                    "file_name" => $upload_img->getClientOriginalName(),
+                    "file_path" => $path
+                ]);
+            }
+        }
+
+        // 上記で保存した最新の画像を取得するため、created_atの降順で並べて、一番最初のコードだけ取ってくる。
+        $image = UploadImage::orderBy('created_at', 'desc')->first();
+        $user = $auth = Auth::user();
+        $user->img_id = $image->id;
+
+        $user->save();
+
+        return redirect( route('setting') );
+    }
 }

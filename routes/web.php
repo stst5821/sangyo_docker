@@ -49,9 +49,8 @@ Route::get('/setting/email','SettingController@showChangeMailForm')->name('email
 Route::post('/setting/email','SettingController@ChangeEmail')->name('email.change');
 
 // 画像アップロード
-Route::get('/show','UploadImageController@show')->name('show.form');
-Route::get('/setting/show','SettingController@showChangeImageForm')->name('show.form');
-Route::post('/upload','UploadImageController@upload')->name('upload');
+Route::get('/setting/show','SettingController@imageshow')->name('show.form');
+Route::post('/upload','SettingController@upload')->name('upload');
 
 // 画像一覧
 Route::get('/list','ImageListController@show')->name('image_list');
