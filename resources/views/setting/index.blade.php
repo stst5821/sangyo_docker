@@ -26,6 +26,8 @@
                     </div>
                     @endif
 
+                    <!-- 氏名 -->
+
                     <div class="list-group mb-3" style="max-width:400px; margin:auto;">
                         <a href="{{ route('name.form') }}" @if ($auth->email_verified_at)
                             class="list-group-item list-group-item-action d-flex justify-content-between
@@ -42,6 +44,22 @@
                             <div><i class="fas fa-chevron-right"></i></div>
                         </a>
 
+                        <!-- アイコン -->
+
+                        <a href="{{ route('show.form')}}"
+                            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <dl class="mb-0">
+                                <dt>{{ __('User_Image') }}</dt>
+                                <dd class="mb-0"><img src="{{ asset('storage/' . $uploads->file_path) }}"
+                                        style="width:20%;" /></dd>
+                            </dl>
+                            @if ($auth->email_verified_at)
+                            <div><i class="fas fa-chevron-right"></i></div>
+                            @endif
+                        </a>
+
+                        <!-- ユーザー名 -->
+
                         <a href="{{ route('username.form')}}"
                             class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                             <dl class="mb-0">
@@ -52,6 +70,8 @@
                             <div><i class="fas fa-chevron-right"></i></div>
                             @endif
                         </a>
+
+                        <!-- メールアドレス -->
 
                         <a href="{{ route('email.form') }}" @if ($auth->email_verified_at)
                             class="list-group-item list-group-item-action d-flex justify-content-between
@@ -70,6 +90,8 @@
                             @endif
                         </a>
 
+                        <!-- パスワード -->
+
                         <a href="{{ route('password.form') }}" @if ($auth->email_verified_at)
                             class="list-group-item list-group-item-action d-flex justify-content-between
                             align-items-center"
@@ -87,6 +109,9 @@
                             @endif
                         </a>
                     </div>
+
+                    <!-- アカウント削除 -->
+
                     <div class="list-group" style="max-width:400px; margin:auto;">
                         <a href="{{ route('deactive.form') }}"
                             class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
@@ -94,6 +119,7 @@
                             <div><i class="fas fa-chevron-right"></i></div>
                         </a>
                     </div>
+
                 </div>
             </div>
         </div>

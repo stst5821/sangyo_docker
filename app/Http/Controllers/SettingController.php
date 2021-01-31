@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ChangeNameRequest;
 use App\Http\Requests\ChangeUserNameRequest;
 use App\Http\Requests\ChangeEmailRequest;
+use App\User;
+use App\UploadImage;
 
 class SettingController extends Controller
 {
@@ -21,7 +23,13 @@ class SettingController extends Controller
     public function index()
     {
         $auth = Auth::user();
-        return view('setting/index',['auth' => $auth]);
+        $user = User::find(Auth::user()->id); // 現在ログインしているユーザーのIDを使って、userテーブルからレコードを持ってくる。
+        $uploads = UploadImage::find($user->img_id); // $userのimage_idカラムのデータを使って、uploadimageからレコードを持ってくる。
+        
+        return view('setting.index',
+            ['auth' => $auth,
+            'uploads' => $uploads
+            ]);
     }
 
     // 名前変更
@@ -30,6 +38,16 @@ class SettingController extends Controller
     {
         $auth = Auth::user();
         return view('setting.name',['auth' => $auth]);
+    }
+
+    public function showChangeImageForm()
+    {
+		//アップロードした画像を取得
+		$uploads = UploadImage::orderBy("id", "desc")->get();
+
+		return view("image_list",[
+			"images" => $uploads
+		]);
     }
     
     public function ChangeName(ChangeNameRequest $request)

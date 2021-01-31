@@ -19,7 +19,7 @@
 
 
     <div class="mb-4 text-right">
-
+        @can('update', $post)
         <!-- 編集ボタン -->
         <a href="{{ action('PostsController@edit', $post->id) }}" class="btn btn-info">
             編集する
@@ -31,7 +31,7 @@
             @method('DELETE')
             <button class="btn btn-danger">削除する</button>
         </form>
-
+        @endcan
     </div>
 
     <!-- コメント投稿のフラッシュメッセージ -->
