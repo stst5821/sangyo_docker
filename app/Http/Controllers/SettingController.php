@@ -9,6 +9,8 @@ use App\Http\Requests\ChangeUserNameRequest;
 use App\Http\Requests\ChangeEmailRequest;
 use App\User;
 use App\UploadImage;
+use Illuminate\Support\Facades\Storage;
+
 
 class SettingController extends Controller
 {
@@ -127,12 +129,16 @@ class SettingController extends Controller
                 ]);
             }
         }
-
-        // 上記で保存した最新の画像を取得するため、created_atの降順で並べて、一番最初のコードだけ取ってくる。
-        $image = UploadImage::orderBy('created_at', 'desc')->first();
+        
         $user = $auth = Auth::user();
-        $user->img_id = $image->id;
 
+        $image_data = UploadImage::find($user->img_id);
+        $image_path = $image_data->file_path;
+        Storage::delete('public/' . $image_path);
+
+         // 上記で保存した最新の画像を取得するため、created_atの降順で並べて、一番最初のコードだけ取ってくる。
+        $image = UploadImage::orderBy('created_at', 'desc')->first();
+        
         $user->save();
 
         return redirect( route('setting') );
