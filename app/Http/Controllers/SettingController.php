@@ -113,6 +113,8 @@ class SettingController extends Controller
             'image' => 'required|file|image|mimes:png,jpeg'
         ]);
 
+        // 画像をストレージとDBに登録するだけの処理をしている。画像とユーザーの紐付けはこの後で行う。
+
         $upload_img = $request->file('image');
 
         if($upload_img) {
@@ -129,16 +131,25 @@ class SettingController extends Controller
                 ]);
             }
         }
+
+        // 元から設定していた画像を、ストレージとDBから削除する。
         
         $user = $auth = Auth::user();
-
+        // Userのimg_idと、upload_imageテーブルのidを紐付け、レコードを取得する。
         $image_data = UploadImage::find($user->img_id);
+        // 取得したupload_imageのレコードから、file_pathだけ取り出して$image_pathに代入する。
         $image_path = $image_data->file_path;
+        // ストレージのファイルを削除する。
         Storage::delete('public/' . $image_path);
 
+        // upload_imageのレコードを削除する。
+        UploadImage::where('id', $image_data->id)->delete();
+
+        // 最初に保存した画像を取り出し、upload_imageのidカラムと、usersのimg_idカラムを紐付ける。
+        
          // 上記で保存した最新の画像を取得するため、created_atの降順で並べて、一番最初のコードだけ取ってくる。
         $image = UploadImage::orderBy('created_at', 'desc')->first();
-        
+        $user->img_id = $image->id;
         $user->save();
 
         return redirect( route('setting') );
