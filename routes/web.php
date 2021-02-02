@@ -61,4 +61,4 @@ Route::resource('post', 'PostsController', ['only' => ['index', 'show','create',
 
 // コメント
 
-Route::resource('comment', 'CommentsController',['only' => ['store']]);
+Route::resource('comment', 'CommentsController',['only' => ['store','destroy']]);

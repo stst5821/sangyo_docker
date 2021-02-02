@@ -77,6 +77,15 @@
                 <p class="mt-2">
                     {!! nl2br(e($comment->comment)) !!}
                 </p>
+
+                <!-- 削除ボタン -->
+                <form style="display: inline-block;" method="POST"
+                    action="{{ action('CommentsController@destroy', $comment->id) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger">削除する</button>
+                </form>
+                
             </div>
             @empty
             <p>コメントはまだありません。</p>

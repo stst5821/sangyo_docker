@@ -19,7 +19,7 @@ class Post extends Model
     public function user()
     {
         // 投稿は1つのユーザーに所属する
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User')->withTrashed();
     }
     
     public function comments()

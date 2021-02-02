@@ -33,4 +33,13 @@ class CommentsController extends Controller
         return redirect()->route('post.show', [$savedata['post_id']])->with('commentstatus','コメントを投稿しました');
         
     }
+
+    public function destroy($id)
+    {
+        $comment = Comment::find($id);
+        $comment->delete();
+
+        // back()で、直前のページに戻る。
+        return back()->with('commentstatus','コメントを削除しました');
+    }
 }

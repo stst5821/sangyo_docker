@@ -27,6 +27,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Category');
     }
+
+    public function upload_image()
+    {
+        return $this->hasOne('App\UploadImage');
+    }
     
 
 

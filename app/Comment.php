@@ -15,7 +15,7 @@ class Comment extends Model
     public function user()
     {
         // コメントは1つのユーザーに所属する
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User')->withTrashed();
     }
 
     public function getUserName()
