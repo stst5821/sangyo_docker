@@ -15,6 +15,7 @@ class CommentsController extends Controller
     {
         // ログインしてなくても、投稿一覧と詳細は見られるようにする。
         $this->middleware('auth');
+
     }
     
     public function store(CommentRequest $request)
@@ -36,7 +37,11 @@ class CommentsController extends Controller
 
     public function destroy($id)
     {
-        $comment = Comment::find($id);
+        $auth = Auth::user();
+        $comment = Comment::findOrFail($id);
+
+        $this->authorize('destroy',$comment);
+
         $comment->delete();
 
         // back()で、直前のページに戻る。

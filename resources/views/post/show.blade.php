@@ -69,8 +69,7 @@
             @forelse($post->comments as $comment)
             <div class="border-top p-4">
                 <time class="text-secondary">
-
-                    {{ $comment->getUserName() }} /
+                    {{ $comment->user->username }} /
                     {{ $comment->created_at->format('Y.m.d H:i') }} /
                     ID:{{ $comment->id }}
                 </time>
@@ -78,6 +77,7 @@
                     {!! nl2br(e($comment->comment)) !!}
                 </p>
 
+                @can('destroy', $comment)
                 <!-- 削除ボタン -->
                 <form style="display: inline-block;" method="POST"
                     action="{{ action('CommentsController@destroy', $comment->id) }}">
@@ -85,7 +85,8 @@
                     @method('DELETE')
                     <button class="btn btn-danger">削除する</button>
                 </form>
-                
+                @endcan
+
             </div>
             @empty
             <p>コメントはまだありません。</p>

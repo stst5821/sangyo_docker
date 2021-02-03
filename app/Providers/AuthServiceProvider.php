@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Gate;
 
 use App\Post;
 use App\Policies\Postpolicy;
+use App\Policies\Commentpolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -20,6 +21,7 @@ class AuthServiceProvider extends ServiceProvider
         // ポリシーを登録する。
         // 'App\Post::class' => 'App\Policies\Postpolicy::class',
         Post::class => Postpolicy::class,
+        Comment::class => Commentpolicy::class,
     ];
 
     /**

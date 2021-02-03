@@ -50,7 +50,6 @@ class PostsController extends Controller
     public function show(Request $request,$id)
     {
         $post = Post::findOrFail($id);
-
         return view('post.show',[
             'post' => $post,
         ]);
