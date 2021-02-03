@@ -32,8 +32,7 @@ class PostsController extends Controller
         // usersテーブルにpostsテーブルをjoinする
         // select文の中で、posts.idというようにテーブル名を指定する。これをやらないと、usersテーブルのidとpostsテーブルのidが重複してしまう。
         // 普通にusersのidが
-        $posts = Post::select('posts.id','users.username','category_id','user_id','subject','body1','body2','body3','posts.created_at','posts.updated_at')
-        ->join('users','posts.user_id','=','users.id')
+        $posts = Post::select()
         ->nameAt($searchword) // 名前でワード検索
         ->categoryAt($category_id)
         ->orderBy('posts.created_at', 'desc')
