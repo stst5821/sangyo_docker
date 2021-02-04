@@ -64,5 +64,6 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'img_id' => 64 // デフォルトの画像を指定
         ]);
+
     }
 }
