@@ -79,7 +79,8 @@
                 <td>{{ $post->created_at->format('Y.m.d') }}</td>
                 <!-- Post.phpで作ったgetUserNameメソッドで、ユーザー名を取得する。 -->
                 <td>{{ $post->username }}</td>
-                <td>{{ $post->subject }}</td>
+                <!-- 表示する文字数を15文字に制限する。 -->
+                <td>{{ Str::limit($post->subject,15) }}</td>
                 <td>・{{ $post->body1 }}<br>
                     ・{{ $post->body2 }}<br>
                     ・{{ $post->body3 }}</td>
