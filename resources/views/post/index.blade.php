@@ -82,6 +82,9 @@
                         <p>
                             <i class="fas fa-heart pink-heart"></i>
                             {{ $post->likes_count }}
+                            <br>
+                            <!-- count()は、最初から用意されているクエリビルダ。これを使うとEloquentのコレクションからもデータを取り出せる？ -->
+                            コメント：{{ $post->comment->count() }}
                         </p>
 
                         by:<a href="#" class="card-link">{{ $post->user->username }}</a>

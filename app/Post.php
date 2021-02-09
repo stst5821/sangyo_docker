@@ -24,7 +24,7 @@ class Post extends Model
         return $this->belongsTo('App\User')->withTrashed();
     }
     
-    public function comments()
+    public function comment()
     {
         // 投稿は複数のコメントを持つので、hasMany
         return $this->hasMany('App\Comment');
