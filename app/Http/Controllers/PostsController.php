@@ -49,8 +49,10 @@ class PostsController extends Controller
     public function show(Request $request,$id)
     {
         $post = Post::findOrFail($id);
+        $like = $post->likes()->where('user_id', Auth::user()->id)->first();
         return view('post.show',[
             'post' => $post,
+            'like' => $like,
         ]);
     }
 

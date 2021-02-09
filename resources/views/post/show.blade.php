@@ -61,6 +61,24 @@
                 カテゴリ：{{ $post->category->name }} / ID:{{ $post->id }}</p>
         </div>
 
+        @if (Auth::check())
+        @if ($like)
+        {{ Form::model($post, array('action' => array('LikesController@destroy', $post->id, $like->id))) }}
+        <button type="submit">
+            <img src="/images/icon_heart_red.svg">
+            Like {{ $post->likes_count }}
+        </button>
+        {!! Form::close() !!}
+        @else
+        {{ Form::model($post, array('action' => array('LikesController@store', $post->id))) }}
+        <button type="submit">
+            <img src="/images/icon_heart.svg">
+            Like {{ $post->likes_count }}
+        </button>
+        {!! Form::close() !!}
+        @endif
+        @endif
+
         <section>
             <h2 class="h5 mb-4">
                 コメント

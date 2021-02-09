@@ -68,6 +68,7 @@
                 <th>名前</th>
                 <th>お題</th>
                 <th>本文</th>
+                <th>いいね</th>
                 <th>処理</th>
             </tr>
         </thead>
@@ -83,6 +84,7 @@
                 <td>・{{ $post->body1 }}<br>
                     ・{{ $post->body2 }}<br>
                     ・{{ $post->body3 }}</td>
+                <td>{{ $post->likes_count }}</td>
                 <td class="text-nowrap">
                     <!-- $post->idでURLパラメータを送っている。 -->
                     <p>
