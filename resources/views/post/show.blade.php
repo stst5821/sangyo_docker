@@ -86,7 +86,7 @@
                 コメント
             </h2>
 
-            @forelse($post->comments as $comment)
+            @forelse($post->comment as $comment)
             <div class="border-top p-4">
                 <time class="text-secondary">
                     {{ $comment->user->username }} /
