@@ -107,7 +107,8 @@
                     <form method="POST" action=" {{ action('PostsController@destroy', $post->id) }}">
                         @csrf
                         @method('DELETE')
-                        <button class="btn btn-danger btn-sm">削除</a>
+                        <!-- 削除クリック時に確認ダイアログ表示 -->
+                        <button onclick="return confirm('投稿を削除しますか？')" class="btn btn-danger btn-sm">削除</a>
                     </form>
                     @endcan
                     @endif

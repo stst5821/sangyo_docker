@@ -29,7 +29,7 @@
         <form style="display: inline-block;" method="POST" action="{{ action('PostsController@destroy', $post->id) }}">
             @csrf
             @method('DELETE')
-            <button class="btn btn-danger">削除する</button>
+            <button onclick="return confirm('投稿を削除しますか？')" class="btn btn-danger">削除する</button>
         </form>
         @endcan
     </div>
@@ -78,6 +78,7 @@
         {!! Form::close() !!}
         @endif
         @endif
+        <!-- コメント -->
 
         <section>
             <h2 class="h5 mb-4">
@@ -101,7 +102,7 @@
                     action="{{ action('CommentsController@destroy', $comment->id) }}">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-danger">削除する</button>
+                    <button onclick="return confirm('コメントを削除しますか？')" class="btn btn-danger">削除する</button>
                 </form>
                 @endcan
 
@@ -119,7 +120,7 @@
 
             <div class="form-group">
                 <label for="body">
-                    本文
+                    コメント内容
                 </label>
 
                 <textarea id="comment" name="comment"
