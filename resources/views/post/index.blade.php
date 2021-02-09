@@ -78,7 +78,7 @@
                 <td>{{ $post->category->name }}</td>
                 <td>{{ $post->created_at->format('Y.m.d') }}</td>
                 <!-- Post.phpで作ったgetUserNameメソッドで、ユーザー名を取得する。 -->
-                <td>{{ $post->username }}</td>
+                <td>{{ $post->user->username }}</td>
                 <td>{{ $post->subject }}</td>
                 <td>・{{ $post->body1 }}<br>
                     ・{{ $post->body2 }}<br>
