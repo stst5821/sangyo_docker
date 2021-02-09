@@ -78,6 +78,7 @@
         {!! Form::close() !!}
         @endif
         @endif
+
         <!-- コメント -->
 
         <section>
