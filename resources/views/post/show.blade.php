@@ -65,20 +65,20 @@
         @if ($like)
         {{ Form::model($post, array('action' => array('LikesController@destroy', $post->id, $like->id))) }}
         <button type="submit">
-            <img src="/images/icon_heart_red.svg">
-            Like {{ $post->likes_count }}
+            <i class="fas fa-heart pink-heart"></i>
+            {{ $post->likes_count }}
         </button>
         {!! Form::close() !!}
         @else
         {{ Form::model($post, array('action' => array('LikesController@store', $post->id))) }}
         <button type="submit">
-            <img src="/images/icon_heart.svg">
-            Like {{ $post->likes_count }}
+            <i class="far fa-heart pink-heart"></i>
+            {{ $post->likes_count }}
         </button>
         {!! Form::close() !!}
         @endif
         @endif
-
+        <br>
         <!-- コメント -->
 
         <section>

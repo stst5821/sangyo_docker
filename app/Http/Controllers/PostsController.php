@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
 use App\User;
+use App\Like;
 // PostRequestの使用宣言
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Auth;
