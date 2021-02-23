@@ -8,39 +8,43 @@
 <link href="/css/post/style.css" rel="stylesheet">
 @endsection
 
-@include('layouts.postheader')
 
 @section('content')
 
 
 <div class="table-responsive">
 
-    <!-- 検索フォーム -->
-    <div class="mt-4 mb-4">
-        <form class="form-inline" method="GET" action="{{ route('post.index') }}">
-            <div class="form-group">
-                <input type="text" name="searchword" value="{{$searchword}}" class="form-control"
-                    placeholder="名前を入力してください">
+    <!-- テスト検索フォーム -->
+
+    <form class="form-inline" method="GET" action="{{ route('post.index') }}">
+        <div class="input-group">
+            <div class="input-group-prepend">
+
+                <!-- プルダウンでカテゴリを選択 -->
+                <select class="custom-select" name="category">
+                    <option value="">全て</option>
+                    @foreach($categories as $id => $name)
+                    <option value="{{$name}}">{{$name}}</option>
+                    @endforeach
+                </select>
+
             </div>
-            <input type="submit" value="検索" class="btn btn-info ml-2">
-        </form>
-    </div>
 
-    <div class="mt-4 mb-4">
-        <p>{{ $posts->total() }}件が見つかりました。</p>
-    </div>
+            <!-- テキストエリアで名前検索 -->
 
-    <div class="mt-4 mb-4">
-        @foreach($categories as $id => $name)
-        <span class="btn">
-            <a href="{{ route('post.index', ['category_id'=>$id]) }}" title="{{ $name }}">
-                {{ $name }}
-            </a>
-        </span>
-        @endforeach
-    </div>
 
-    <div class=" mt-4 mb-4">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-outline-dark">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <!-- テスト検索フォームここまで -->
+
+    <!-- 新規投稿 -->
+    <div class="my-1">
         <!-- ログインしているときだけ、新規投稿ボタンを表示させる。 -->
         @if(Auth::check())
         <a href="{{ route('post.create') }}" class="btn btn-primary">
@@ -99,13 +103,8 @@
 
 
     <div class="d-flex justify-content-center mb-5">
-        {{ $posts->appends([
-        'category_id' => $category_id,
-        'searchword' => $searchword,
-        ])->links() }}
+
     </div>
 
 </div>
 @endsection
-
-@include('layouts.postfooter')

@@ -10,6 +10,7 @@ use App\Like;
 // PostRequestの使用宣言
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PostsController extends Controller
 {
@@ -21,31 +22,42 @@ class PostsController extends Controller
 
     public function index(Request $request)
     {
-        // カテゴリ取得
-        $category = new Category; // インスタンス作成
-        $categories = $category->getLists();
+        $queryPost = Post::query();
+        $queryCat = Category::query();
 
-        // requestされたカテゴリIDを$category_idに代入
-        $category_id = $request->category_id;
-        // 検索文字列を$searchwordに代入
-        $searchword = $request->searchword;
-
-        // usersテーブルにpostsテーブルをjoinする
-        // select文の中で、posts.idというようにテーブル名を指定する。これをやらないと、usersテーブルのidとpostsテーブルのidが重複してしまう。
-        // 普通にusersのidが
+        
+        // 絞り込みする前のPostsテーブルを表示する。
         $posts = Post::select()
-        ->nameAt($searchword) // 名前でワード検索
-        ->categoryAt($category_id)
         ->orderBy('posts.created_at', 'desc')
         ->paginate(10);
+        
+        // =============== ここから 検索フォームでカテゴリを入力し、データ送信後の処理 ===============
+
+        // カテゴリ名が入力されていたら、中身を実行。$categoryNameに検索したいカテゴリを代入。
+        if ($request->filled('category')) {
+            $categoryName = $request->input('category'); // 検索フォームから入力されたカテゴリ名を変数に代入。
+            $catId = Category::where('name', $categoryName)->first(); // カテゴリ名からcategoryのレコードを1件取得。
+
+            // カテゴリIDでpostsテーブルからレコードを取得し、$postsに代入。
+            $posts = Post::where('category_id',$catId->id)->get();
+        }
+
+        // =============== ここまで 検索フォームでカテゴリを入力し、データ送信後の処理 ===============
+
+
+        // カテゴリ取得を表示するためのコード
+
+        $category = new Category; // インスタンス作成
+        $categories = $category->getLists(); // Category.phpのgetLists()メソッドでカテゴリテーブルからidとnameだけ取得し、$categoriesに代入。
+ 
         
         return view('post.index',[
             'posts' => $posts, 
             'categories' => $categories, 
-            'category_id'=>$category_id,
-            'searchword' => $searchword
             ]);
     }
+
+    // 投稿詳細
 
     public function show(Request $request,$id)
     {
