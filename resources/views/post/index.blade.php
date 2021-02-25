@@ -102,11 +102,9 @@
         </div><!-- row -->
     </div><!-- container -->
 
-
-
-
     <div class="d-flex justify-content-center mb-5">
-
+        <!-- withQueryString()で、現在のクエリ文字列値をすべてペジネーションリンクへ追加する。自分でクエリ文字列を指定したい場合は、appendsを使う。 -->
+        {{ $posts->withQueryString()->links() }}
     </div>
 
 </div>

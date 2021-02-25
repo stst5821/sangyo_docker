@@ -24,11 +24,6 @@ class PostsController extends Controller
     {
         $query = Post::query(); // ここに複数のクエリを保存できる。
 
-        // 絞り込みする前のPostsテーブルを表示する。
-        $posts = Post::select()
-        ->orderBy('posts.created_at', 'desc')
-        ->paginate(10);
-
         // viewで表示するカテゴリ名を取得する。
         $category = new Category; // インスタンス作成
         $categories = $category->getLists(); // Category.phpのgetLists()メソッドでカテゴリテーブルからidとnameだけ取得し、$categoriesに代入。
@@ -42,31 +37,31 @@ class PostsController extends Controller
             $query->where('category_id', $category->id); // 投稿のcategory_idが、$category->idと一致するクエリを$queryに保存する。
         }
 
-        // =============== ここまで 検索フォームでカテゴリを入力し、データ送信後の処理 ===============
-
-
-        // =============== ここから 検索フォームでテキストを入力し、データ送信後の処理 ===============
-
         if($request->filled('keyword')) {
             $keyword =  '%' . $this->escape($request->input('keyword')). '%';
-
-            // 
+            
+            // クロージャを使っているが、なぜ使わないといけないか不明。消しても普通に動くのだが。
             $query->where(function($query) use($keyword) {
-                $query->where('subject','LIKE',$keyword);// subjectに、$keywordが入っている投稿を探す。
+                $query->where('subject','LIKE',$keyword); // subject、body1~3に、$keywordが入っている投稿を探す。
                 $query->orWhere('body1','LIKE',$keyword);
+                $query->orWhere('body2','LIKE',$keyword);
+                $query->orWhere('body3','LIKE',$keyword);
             });
         }
 
-        $posts = $query->orderBy('id', 'DESC')->get();
+        // これまで$queryに保存した検索フォームの内容をDBから取得する。
+        $posts = $query->orderBy('posts.created_at', 'desc')->paginate(2);
 
-        // =============== ここまで 検索フォームでテキストを入力し、データ送信後の処理 ===============
-
+        // =============== ここまで 検索フォームでカテゴリを入力し、データ送信後の処理 ===============
 
         return view('post.index',[
             'posts' => $posts, 
-            'categories' => $categories, 
+            'categories' => $categories, // 検索前のindex画面で検索カテゴリを表示するためのデータをviewに送っている。
             ]);
     }
+
+    // エスケープメソッド ======================================================================================
+
 
     private function escape(string $value)
     {
@@ -77,7 +72,7 @@ class PostsController extends Controller
         );
     }
 
-    // 投稿詳細
+    // 投稿詳細 ======================================================================================
 
     public function show(Request $request,$id)
     {
@@ -89,6 +84,8 @@ class PostsController extends Controller
         ]);
     }
 
+    // 新規投稿 ======================================================================================
+
     public function create()
     {
         // ログインしているユーザーの情報をcreate.viewに送っている。
@@ -99,6 +96,8 @@ class PostsController extends Controller
         $categories = $category->getLists()->prepend('選択','');
         return view('post.create',['categories' => $categories, 'auth' => $auth]);
     }
+
+    // 新規投稿の保存 ======================================================================================
 
     public function store(PostRequest $request)
     {
@@ -119,6 +118,8 @@ class PostsController extends Controller
 
         return redirect('/post')->with('poststatus','新規投稿しました');
     }
+
+    // 編集 ======================================================================================
 
     public function edit($id)
     {
@@ -149,6 +150,8 @@ class PostsController extends Controller
 
         return redirect('/post')->with('poststatus', '投稿を編集しました');
     }
+
+    // 削除 ======================================================================================
 
     public function destroy($id)
     {
