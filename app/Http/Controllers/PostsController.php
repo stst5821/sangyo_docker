@@ -22,39 +22,59 @@ class PostsController extends Controller
 
     public function index(Request $request)
     {
-        $queryPost = Post::query();
-        $queryCat = Category::query();
+        $query = Post::query(); // ここに複数のクエリを保存できる。
 
-        
         // 絞り込みする前のPostsテーブルを表示する。
         $posts = Post::select()
         ->orderBy('posts.created_at', 'desc')
         ->paginate(10);
+
+        // viewで表示するカテゴリ名を取得する。
+        $category = new Category; // インスタンス作成
+        $categories = $category->getLists(); // Category.phpのgetLists()メソッドでカテゴリテーブルからidとnameだけ取得し、$categoriesに代入。
         
         // =============== ここから 検索フォームでカテゴリを入力し、データ送信後の処理 ===============
 
         // カテゴリ名が入力されていたら、中身を実行。$categoryNameに検索したいカテゴリを代入。
         if ($request->filled('category')) {
             $categoryName = $request->input('category'); // 検索フォームから入力されたカテゴリ名を変数に代入。
-            $catId = Category::where('name', $categoryName)->first(); // カテゴリ名からcategoryのレコードを1件取得。
-
-            // カテゴリIDでpostsテーブルからレコードを取得し、$postsに代入。
-            $posts = Post::where('category_id',$catId->id)->get();
+            $category = Category::where('name', $categoryName)->first(); // categoryテーブルのnameカラムと、$categoryNameが一致するレコードを検索し、1件取得。
+            $query->where('category_id', $category->id); // 投稿のcategory_idが、$category->idと一致するクエリを$queryに保存する。
         }
 
         // =============== ここまで 検索フォームでカテゴリを入力し、データ送信後の処理 ===============
 
 
-        // カテゴリ取得を表示するためのコード
+        // =============== ここから 検索フォームでテキストを入力し、データ送信後の処理 ===============
 
-        $category = new Category; // インスタンス作成
-        $categories = $category->getLists(); // Category.phpのgetLists()メソッドでカテゴリテーブルからidとnameだけ取得し、$categoriesに代入。
- 
-        
+        if($request->filled('keyword')) {
+            $keyword =  '%' . $this->escape($request->input('keyword')). '%';
+
+            // 
+            $query->where(function($query) use($keyword) {
+                $query->where('subject','LIKE',$keyword);// subjectに、$keywordが入っている投稿を探す。
+                $query->orWhere('body1','LIKE',$keyword);
+            });
+        }
+
+        $posts = $query->orderBy('id', 'DESC')->get();
+
+        // =============== ここまで 検索フォームでテキストを入力し、データ送信後の処理 ===============
+
+
         return view('post.index',[
             'posts' => $posts, 
             'categories' => $categories, 
             ]);
+    }
+
+    private function escape(string $value)
+    {
+        return str_replace(
+            ['\\', '%', '_'],
+            ['\\\\', '\\%', '\\_'],
+            $value
+        );
     }
 
     // 投稿詳細

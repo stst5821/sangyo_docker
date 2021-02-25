@@ -32,12 +32,15 @@
 
             <!-- テキストエリアで名前検索 -->
 
+            <input type="text" name="keyword">
 
+            <!-- 検索ボタン -->
             <div class="input-group-append">
                 <button type="submit" class="btn btn-outline-dark">
                     <i class="fas fa-search"></i>
                 </button>
             </div>
+
         </div>
     </form>
 
