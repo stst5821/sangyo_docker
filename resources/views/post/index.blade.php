@@ -14,38 +14,6 @@
 
 <div class="table-responsive">
 
-    <!-- テスト検索フォーム -->
-
-    <form class="form-inline" method="GET" action="{{ route('post.index') }}">
-        <div class="input-group">
-            <div class="input-group-prepend">
-
-                <!-- プルダウンでカテゴリを選択 -->
-                <select class="custom-select" name="category">
-                    <option value="">全て</option>
-                    @foreach($categories as $id => $name)
-                    <option value="{{$name}}">{{$name}}</option>
-                    @endforeach
-                </select>
-
-            </div>
-
-            <!-- テキストエリアで名前検索 -->
-
-            <input type="text" name="keyword">
-
-            <!-- 検索ボタン -->
-            <div class="input-group-append">
-                <button type="submit" class="btn btn-outline-dark">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-
-        </div>
-    </form>
-
-    <!-- テスト検索フォームここまで -->
-
     <!-- 新規投稿 -->
     <div class="my-1">
         <!-- ログインしているときだけ、新規投稿ボタンを表示させる。 -->

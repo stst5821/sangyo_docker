@@ -3,6 +3,8 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
+use App\Category;
+use Illuminate\Support\Facades\Request;
 
 class Header extends Component
 {
@@ -23,6 +25,18 @@ class Header extends Component
      */
     public function render()
     {
-        return view('components.header');
+        // viewで表示するカテゴリ名を取得する。
+        $category = new Category; // インスタンス作成
+        $categories = $category->getLists(); // Category.phpのgetLists()メソッドでカテゴリテーブルからidとnameだけ取得し、$categoriesに代入。
+
+        $defaults = [
+            'category' => Request::input('category', ''),
+            'keyword'  => Request::input('keyword', ''),
+        ];
+
+
+        return view('components.header')
+            ->with('defaults', $defaults)
+            ->with('categories', $categories);
     }
 }

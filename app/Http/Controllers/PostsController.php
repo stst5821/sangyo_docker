@@ -50,7 +50,7 @@ class PostsController extends Controller
         }
 
         // これまで$queryに保存した検索フォームの内容をDBから取得する。
-        $posts = $query->orderBy('posts.created_at', 'desc')->paginate(2);
+        $posts = $query->orderBy('posts.created_at', 'desc')->paginate(10);
 
         // =============== ここまで 検索フォームでカテゴリを入力し、データ送信後の処理 ===============
 

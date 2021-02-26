@@ -13,6 +13,43 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
 
+                <!-- 検索フォーム -->
+                <form class="form-inline" method="GET" action="{{ route('post.index') }}">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+
+                            <!-- プルダウンでカテゴリを選択 -->
+                            <select class="custom-select" name="category">
+                                <option value="">全て</option>
+                                @foreach($categories as $id => $name)
+
+                                <!-- 検索後も、カテゴリ選択が保持される。 -->
+                                <!-- $defaults['category']がnullでなく、defaults['category']と$nameが同じだったら、中身を実行。 -->
+                                @if((!empty($defaults['category']) && $defaults['category'] == $name))
+                                    <!-- selectedをつけて、デフォルトで選択されている状態にすることで、選択したカテゴリを保持している。 -->
+                                    <option value = "{{ $name }}" selected>{{ $name }}</option>
+                                @else
+                                    <option value = "{{ $name }}">{{ $name }}</option>
+                                @endif
+                                
+                                @endforeach
+                            </select>
+
+                        </div>
+
+                        <!-- テキストエリアで名前検索 -->
+                        <input type="text" name="keyword" value="{{ $defaults['keyword'] }}">
+
+                        <!-- 検索ボタン -->
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-outline-dark">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!-- 検索フォームここまで -->
+
             </ul>
 
             <!-- Right Side Of Navbar -->
