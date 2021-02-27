@@ -29,6 +29,7 @@ class Header extends Component
         $category = new Category; // インスタンス作成
         $categories = $category->getLists(); // Category.phpのgetLists()メソッドでカテゴリテーブルからidとnameだけ取得し、$categoriesに代入。
 
+        // カテゴリを選択、検索ワードを入力して検索ボタンを押したあと、値がcategoryとkeywordにそれぞれ入る。
         $defaults = [
             'category' => Request::input('category', ''),
             'keyword'  => Request::input('keyword', ''),
