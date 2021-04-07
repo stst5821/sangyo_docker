@@ -33,7 +33,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne('App\UploadImage');
     }
     
-
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 
 
 

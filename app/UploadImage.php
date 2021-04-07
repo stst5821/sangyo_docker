@@ -11,4 +11,10 @@ class UploadImage extends Model
         "file_name",
         "file_path"
     ];
+
+    public function user()
+    {
+        // 投稿は1つのユーザーに所属する
+        return $this->belongsTo('App\User')->withTrashed();
+    }
 }

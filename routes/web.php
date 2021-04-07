@@ -26,6 +26,9 @@ Auth::routes(['verify' => true]);
 // indexは省略してアクセスできるようにするのが一般的なので、/home/indexとはせず、/homeだけにしている。
 Route::get('/home', 'HomeController@index')->name('home');
 
+// マイページ
+Route::get('/setting', 'SettingController@index')->name('setting');
+
 // パスワード変更
 Route::get('/setting/change', 'Auth\ChangePasswordController@showChangePasswordForm')->name('password.form');
 Route::post('/setting/change', 'Auth\ChangePasswordController@ChangePassword')->name('password.change');
@@ -33,8 +36,6 @@ Route::post('/setting/change', 'Auth\ChangePasswordController@ChangePassword')->
 // ユーザー削除
 Route::get('/setting/deactive', 'Auth\DeactiveController@showDeactiveForm')->name('deactive.form');
 Route::post('/setting/deactive', 'Auth\DeactiveController@deactive')->name('deactive');
-
-Route::get('/setting', 'SettingController@index')->name('setting');
 
 // 氏名変更
 Route::get('/setting/name','SettingController@showChangeNameForm')->name('name.form');
@@ -62,3 +63,8 @@ Route::resource('post', 'PostsController', ['only' => ['index', 'show','create',
 // コメント
 
 Route::resource('comment', 'CommentsController',['only' => ['store','destroy']]);
+
+// いいね
+
+Route::post('/posts/{post}/likes','LikesController@store')->name('likes.store');
+Route::post('/posts/{post}/likes/{like}','LikesController@destroy')->name('likes.destroy');

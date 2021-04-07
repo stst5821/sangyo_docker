@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
 use App\User;
+use App\Like;
 // PostRequestの使用宣言
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PostsController extends Controller
 {
@@ -20,40 +22,72 @@ class PostsController extends Controller
 
     public function index(Request $request)
     {
-        // カテゴリ取得
+        // queryメソッドに引数を渡さずに呼び出せば、連想配列ですべてのクエリストリングを取得できる。。
+        $query = Post::query(); // ここに複数のクエリを保存できる。
+
+        // viewで表示する”投稿データ”のカテゴリ名を取得する。検索フォームのカテゴリ名ではないので注意。
         $category = new Category; // インスタンス作成
-        $categories = $category->getLists();
-
-        // requestされたカテゴリIDを$category_idに代入
-        $category_id = $request->category_id;
-        // 検索文字列を$searchwordに代入
-        $searchword = $request->searchword;
-
-        // usersテーブルにpostsテーブルをjoinする
-        // select文の中で、posts.idというようにテーブル名を指定する。これをやらないと、usersテーブルのidとpostsテーブルのidが重複してしまう。
-        // 普通にusersのidが
-        $posts = Post::select('posts.id','users.username','category_id','user_id','subject','body1','body2','body3','posts.created_at','posts.updated_at')
-        ->join('users','posts.user_id','=','users.id')
-        ->nameAt($searchword) // 名前でワード検索
-        ->categoryAt($category_id)
-        ->orderBy('posts.created_at', 'desc')
-        ->paginate(10);
+        $categories = $category->getLists(); // Category.phpのgetLists()メソッドでカテゴリテーブルからidとnameだけ取得し、$categoriesに代入。
         
+        // =============== ここから 検索フォームでカテゴリを入力し、データ送信後の処理 ===============
+
+        // カテゴリ名が入力されていたら、中身を実行。$categoryNameに検索したいカテゴリを代入。
+        if ($request->filled('category')) {
+            $categoryName = $request->input('category'); // 検索フォームから入力されたカテゴリ名を変数に代入。
+            $category = Category::where('name', $categoryName)->first(); // categoryテーブルのnameカラムと、$categoryNameが一致するレコードを検索し、1件取得。
+            $query->where('category_id', $category->id); // 投稿のcategory_idが、$category->idと一致するクエリを$queryに保存する。
+        }
+
+
+
+        if($request->filled('keyword')) {
+            $keyword =  '%' . $this->escape($request->input('keyword')). '%';
+            
+            // クロージャを使っているが、なぜ使わないといけないか不明。消しても普通に動くのだが。
+            $query->where(function($query) use($keyword) {
+                $query->where('subject','LIKE',$keyword); // subject、body1~3に、$keywordが入っている投稿を探す。
+                $query->orWhere('body1','LIKE',$keyword);
+                $query->orWhere('body2','LIKE',$keyword);
+                $query->orWhere('body3','LIKE',$keyword);
+            });
+        }
+
+        // これまで$queryに保存した検索フォームの内容をDBから取得する。
+        $posts = $query->orderBy('posts.created_at', 'desc')->paginate(10);
+
+        // =============== ここまで 検索フォームでカテゴリを入力し、データ送信後の処理 ===============
+
         return view('post.index',[
             'posts' => $posts, 
-            'categories' => $categories, 
-            'category_id'=>$category_id,
-            'searchword' => $searchword
+            'categories' => $categories, // 検索前のindex画面で、投稿ごとのカテゴリを表示するためのデータをviewに送っている。検索フォームのカテゴリデータではない。
             ]);
     }
+
+    // エスケープメソッド ======================================================================================
+
+
+    private function escape(string $value)
+    {
+        return str_replace(
+            ['\\', '%', '_'],
+            ['\\\\', '\\%', '\\_'],
+            $value
+        );
+    }
+
+    // 投稿詳細 ======================================================================================
 
     public function show(Request $request,$id)
     {
         $post = Post::findOrFail($id);
+        $like = $post->likes()->where('user_id', Auth::user()->id)->first();
         return view('post.show',[
             'post' => $post,
+            'like' => $like,
         ]);
     }
+
+    // 新規投稿 ======================================================================================
 
     public function create()
     {
@@ -65,6 +99,8 @@ class PostsController extends Controller
         $categories = $category->getLists()->prepend('選択','');
         return view('post.create',['categories' => $categories, 'auth' => $auth]);
     }
+
+    // 新規投稿の保存 ======================================================================================
 
     public function store(PostRequest $request)
     {
@@ -85,6 +121,8 @@ class PostsController extends Controller
 
         return redirect('/post')->with('poststatus','新規投稿しました');
     }
+
+    // 編集 ======================================================================================
 
     public function edit($id)
     {
@@ -115,6 +153,8 @@ class PostsController extends Controller
 
         return redirect('/post')->with('poststatus', '投稿を編集しました');
     }
+
+    // 削除 ======================================================================================
 
     public function destroy($id)
     {

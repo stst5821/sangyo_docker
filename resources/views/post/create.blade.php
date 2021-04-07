@@ -28,7 +28,7 @@
 
                     <select id="category_id" name="category_id"
                         class="form-control {{ $errors->has('category_id') ? 'is-invalid' : '' }}"
-                        value="{{ old('category_id') }}">
+                        value="{{ old('category_id') }}" required>
                         @foreach($categories as $id => $name)
                         <option value="{{ $id }}">
                             {{ $name }}
@@ -48,7 +48,7 @@
                     </label>
                     <input id="subject" name="subject"
                         class="form-control {{ $errors->has('subject') ? 'is-invalid' : '' }}"
-                        value="{{ old('subject') }}" type="text">
+                        value="{{ old('subject') }}" type="text" required maxlength='100'>
                     @if ($errors->has('subject'))
                     <div class="invalid-feedback">
                         {{ $errors->first('subject') }}
@@ -66,7 +66,8 @@
                     <div id="app1">
 
                         <input v-model="myText" id="body1" name="body1"
-                            class="form-control {{ $errors->has('body1') ? 'is-invalid' : '' }}" rows="4" type="text">
+                            class="form-control {{ $errors->has('body1') ? 'is-invalid' : '' }}" rows="4" type="text"
+                            required maxlength='15'>
 
                         @if ($errors->has('body1'))
                         <div class="invalid-feedback">
@@ -82,7 +83,7 @@
                     <div id="app2">
                         <input v-model="myText" id="body2" name="body2"
                             class="form-control {{ $errors->has('body2') ? 'is-invalid' : '' }}" rows="4"
-                            value="{{ old('body2') }}" type="text">
+                            value="{{ old('body2') }}" type="text" required maxlength='15'>
                         @if ($errors->has('body2'))
                         <div class="invalid-feedback">
                             {{ $errors->first('body2') }}
@@ -98,7 +99,7 @@
                     <div id="app3">
                         <input v-model="myText" id="body3" name="body3"
                             class="form-control {{ $errors->has('body3') ? 'is-invalid' : '' }}" rows="4"
-                            value="{{ old('body3') }}" type="text">
+                            value="{{ old('body3') }}" type="text" required maxlength='15'>
 
                         @if ($errors->has('body3'))
                         <div class="invalid-feedback">

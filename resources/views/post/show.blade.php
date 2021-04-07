@@ -29,7 +29,7 @@
         <form style="display: inline-block;" method="POST" action="{{ action('PostsController@destroy', $post->id) }}">
             @csrf
             @method('DELETE')
-            <button class="btn btn-danger">削除する</button>
+            <button onclick="return confirm('投稿を削除しますか？')" class="btn btn-danger">削除する</button>
         </form>
         @endcan
     </div>
@@ -61,12 +61,32 @@
                 カテゴリ：{{ $post->category->name }} / ID:{{ $post->id }}</p>
         </div>
 
+        @if (Auth::check())
+        @if ($like)
+        {{ Form::model($post, array('action' => array('LikesController@destroy', $post->id, $like->id))) }}
+        <button type="submit">
+            <i class="fas fa-heart pink-heart"></i>
+            {{ $post->likes_count }}
+        </button>
+        {!! Form::close() !!}
+        @else
+        {{ Form::model($post, array('action' => array('LikesController@store', $post->id))) }}
+        <button type="submit">
+            <i class="far fa-heart pink-heart"></i>
+            {{ $post->likes_count }}
+        </button>
+        {!! Form::close() !!}
+        @endif
+        @endif
+        <br>
+        <!-- コメント -->
+
         <section>
             <h2 class="h5 mb-4">
                 コメント
             </h2>
 
-            @forelse($post->comments as $comment)
+            @forelse($post->comment as $comment)
             <div class="border-top p-4">
                 <time class="text-secondary">
                     {{ $comment->user->username }} /
@@ -83,7 +103,7 @@
                     action="{{ action('CommentsController@destroy', $comment->id) }}">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-danger">削除する</button>
+                    <button onclick="return confirm('コメントを削除しますか？')" class="btn btn-danger">削除する</button>
                 </form>
                 @endcan
 
@@ -101,7 +121,7 @@
 
             <div class="form-group">
                 <label for="body">
-                    本文
+                    コメント内容
                 </label>
 
                 <textarea id="comment" name="comment"

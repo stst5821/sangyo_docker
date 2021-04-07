@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Like;
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -22,7 +24,7 @@ class Post extends Model
         return $this->belongsTo('App\User')->withTrashed();
     }
     
-    public function comments()
+    public function comment()
     {
         // 投稿は複数のコメントを持つので、hasMany
         return $this->hasMany('App\Comment');
@@ -33,6 +35,20 @@ class Post extends Model
         // 投稿は1つのカテゴリを持つので、belongsTo 投稿はカテゴリに所属する。
         return $this->belongsTo('App\Category');
     }
+
+    // いいね機能
+
+    public function likes()
+    {
+        return $this->hasMany('App\Like');
+    }
+
+    public function like_by()
+    {
+        return Like::where('user_id', Auth::user()->id)->first();
+    }
+
+    // いいね機能 ここまで
 
     // ユーザーネームを拾ってくるメソッド
     public function getUserName()

@@ -8,39 +8,14 @@
 <link href="/css/post/style.css" rel="stylesheet">
 @endsection
 
-@include('layouts.postheader')
 
 @section('content')
 
 
 <div class="table-responsive">
 
-    <!-- 検索フォーム -->
-    <div class="mt-4 mb-4">
-        <form class="form-inline" method="GET" action="{{ route('post.index') }}">
-            <div class="form-group">
-                <input type="text" name="searchword" value="{{$searchword}}" class="form-control"
-                    placeholder="名前を入力してください">
-            </div>
-            <input type="submit" value="検索" class="btn btn-info ml-2">
-        </form>
-    </div>
-
-    <div class="mt-4 mb-4">
-        <p>{{ $posts->total() }}件が見つかりました。</p>
-    </div>
-
-    <div class="mt-4 mb-4">
-        @foreach($categories as $id => $name)
-        <span class="btn">
-            <a href="{{ route('post.index', ['category_id'=>$id]) }}" title="{{ $name }}">
-                {{ $name }}
-            </a>
-        </span>
-        @endforeach
-    </div>
-
-    <div class=" mt-4 mb-4">
+    <!-- 新規投稿 -->
+    <div class="my-1">
         <!-- ログインしているときだけ、新規投稿ボタンを表示させる。 -->
         @if(Auth::check())
         <a href="{{ route('post.create') }}" class="btn btn-primary">
@@ -58,74 +33,47 @@
     </div>
     @endif
 
-    <table class="table table-hover">
 
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>カテゴリ</th>
-                <th>作成日時</th>
-                <th>名前</th>
-                <th>お題</th>
-                <th>本文</th>
-                <th>処理</th>
-            </tr>
-        </thead>
-        <tbody id="tbl">
+    <div class="container-fluid">
+        <div class="row">
             @foreach ($posts as $post)
-            <tr>
-                <td>{{ $post->id }}</td>
-                <td>{{ $post->category->name }}</td>
-                <td>{{ $post->created_at->format('Y.m.d') }}</td>
-                <!-- Post.phpで作ったgetUserNameメソッドで、ユーザー名を取得する。 -->
-                <td>{{ $post->username }}</td>
-                <td>{{ $post->subject }}</td>
-                <td>・{{ $post->body1 }}<br>
-                    ・{{ $post->body2 }}<br>
-                    ・{{ $post->body3 }}</td>
-                <td class="text-nowrap">
-                    <!-- $post->idでURLパラメータを送っている。 -->
-                    <p>
-                        <a href="{{ action('PostsController@show', $post->id) }}" class="btn btn-primary btn-sm">
-                            詳細
-                        </a>
-                    </p>
-                    <!-- ログインしているときだけ、編集・削除ボタンを表示させる。 -->
-                    @if(Auth::check())
+            <div class="col-3 my-1">
 
-                    <!-- ログインユーザーが投稿した記事のみ編集と削除ができる -->
-                    @can('update', $post)
-                    <!-- 編集はedit画面に飛ばす処理なので、hrefを使う。 -->
-                    <p>
-                        <a href="{{ action('PostsController@edit', $post->id) }}" class="btn btn-info btn-sm">
-                            編集
-                        </a>
-                    </p>
-                    <!-- 削除は、画面遷移なしでそのままdestroyアクションを実行するので、formメソッドを使う -->
-                    <form method="POST" action=" {{ action('PostsController@destroy', $post->id) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger btn-sm">削除</a>
-                    </form>
-                    @endcan
-                    @endif
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{{ action('PostsController@show', $post->id) }}" class="card__link">
+                                {{ Str::limit($post->subject,15) }}
+                            </a>
+                        </h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            カテゴリ：{{ $post->category->name }}
+                        </h6>
+                        <p class="card-text">
+                            ・{{ $post->body1 }}<br>
+                            ・{{ $post->body2 }}<br>
+                            ・{{ $post->body3 }}
+                        </p>
+                        <p>
+                            <i class="fas fa-heart pink-heart"></i>
+                            {{ $post->likes_count }}
+                            <br>
+                            <!-- count()は、最初から用意されているクエリビルダ。これを使うとEloquentのコレクションからもデータを取り出せる？ -->
+                            コメント：{{ $post->comment->count() }}
+                        </p>
 
-                </td>
-            </tr>
+                        by:<a href="#" class="card-link">{{ $post->user->username }}</a>
+                    </div><!-- card-body -->
+                </div><!-- card -->
+            </div><!-- col -->
             @endforeach
-        </tbody>
-    </table>
-
-
+        </div><!-- row -->
+    </div><!-- container -->
 
     <div class="d-flex justify-content-center mb-5">
-        {{ $posts->appends([
-        'category_id' => $category_id,
-        'searchword' => $searchword,
-        ])->links() }}
+        <!-- withQueryString()で、現在のクエリ文字列値をすべてペジネーションリンクへ追加する。自分でクエリ文字列を指定したい場合は、appendsを使う。 -->
+        {{ $posts->withQueryString()->links() }}
     </div>
 
 </div>
 @endsection
-
-@include('layouts.postfooter')
