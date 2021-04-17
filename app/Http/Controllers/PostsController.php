@@ -38,8 +38,6 @@ class PostsController extends Controller
             $query->where('category_id', $category->id); // 投稿のcategory_idが、$category->idと一致するクエリを$queryに保存する。
         }
 
-
-
         if($request->filled('keyword')) {
             $keyword =  '%' . $this->escape($request->input('keyword')). '%';
             

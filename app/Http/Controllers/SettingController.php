@@ -142,8 +142,8 @@ class SettingController extends Controller
 
         // 元の登録画像がデフォルト画像だった場合は、削除しない。
         // 削除すると、ユーザー登録した際に設定するデフォルト画像が表示されなくなってしまう。
-        // 64は、デフォルト画像のid
-        if (!$image_data->id == 64){
+        // 1は、デフォルト画像のid
+        if (!$image_data->id == 1){
         // ストレージのファイルを削除する。
         Storage::delete('public/' . $image_path);
         // upload_imageのレコードを削除する。

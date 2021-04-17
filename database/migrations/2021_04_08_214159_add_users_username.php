@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddImgIdToUsers extends Migration
+class AddUsersUsername extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddImgIdToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('img_id');
+            $table->string('username', 32)->unique('users_username_unique')->after('id')->comment('ユーザー名');
         });
     }
 
@@ -24,9 +24,9 @@ class AddImgIdToUsers extends Migration
      * @return void
      */
     public function down()
-    {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('img_id');
+        {
+            Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('username');
         });
     }
 }
