@@ -7,8 +7,6 @@
 <link href="/css/post/style.css" rel="stylesheet">
 @endsection
 
-@include('layouts.postheader')
-
 @section('content')
 <div class="container mt-4">
     <div class="border p-4">
@@ -123,5 +121,3 @@
     </div>
 </div>
 @endsection
-
-@include('layouts.postfooter')
