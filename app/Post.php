@@ -15,6 +15,7 @@ class Post extends Model
         'body1',
         'body2',
         'body3',
+        'is_deleted',
         'category_id',
     ];
 
