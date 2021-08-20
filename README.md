@@ -1,3 +1,12 @@
+## やること
+
+Herokuにデプロイ
+エラー修正
+
+## ローカルサイト
+MAMP版
+http://localhost/sangyo/public/
+
 ## 機能  
   
 【実装済】  
