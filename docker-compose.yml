@@ -1,0 +1,35 @@
+version: "3.8" # DockerComposeファイルのバージョン指定
+services:
+  app:
+    container_name: sangyo-app
+    build: ./infra/php #docker buildを実行する際の現在の作業ディレクトリ(ビルドコンテキスト)を指定
+    volumes: # ホスト側のディレクトリや名前付きボリュームをコンテナ側へマウントしたい時に指定
+      - ./backend:/work # ./backend ディレクトリをappサービスのコンテナ内 /work へマウント
+
+  web:
+    container_name: sangyo-web
+    image: nginx:1.18-alpine #コンテナを起動させるイメージを指定
+
+    ports: # nginxへ外(ホスト側)からコンテナ内へアクセスさせるため公開用のポートを設定します。
+      - 8080:80 # ホスト側:コンテナ側 と設定。
+
+    volumes: # ホスト側にあるディレクトリ、ファイルをコンテナ内へマウントさせています。
+      - ./backend:/work
+      - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    working_dir: /work
+
+  db:
+    container_name: sangyo-db
+    image: postgres:12
+    environment:
+      TZ: "Asia/Tokyo"
+      POSTGRES_USER: "docker"
+      POSTGRES_PASSWORD: "docker"
+      POSTGRES_DB: "laravel_development"
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+volumes:
+  db:
