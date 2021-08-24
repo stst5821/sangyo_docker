@@ -4,6 +4,11 @@
 
 - 投稿画面の文字列カウント機能が動いていないので、fix する
 
+- ユーザーを削除したら、投稿した post や comment が削除されるかチェック
+
+- 投稿を削除すると、エラーが出る
+  Call to undefined method App\Post::comments()
+
 ## ローカルサイト
 
 MAMP 版

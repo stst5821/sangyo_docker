@@ -159,7 +159,7 @@ class PostsController extends Controller
         $post = Post::findOrFail($id);
         $this->authorize('destroy', $post); // PostPolicyのupdateメソッドに書いた条件で認可する。
 
-        $post->comments()->delete(); // コメント削除。Post,commentモデルでリレーション設定をしているので削除できる。
+        $post->comment()->delete(); // コメント削除。Post,commentモデルでリレーション設定をしているので削除できる。
         $post->delete(); // 投稿の削除
 
         return redirect('/post')->with('poststatus','投稿を削除しました。');
