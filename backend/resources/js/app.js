@@ -4,13 +4,15 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require("./bootstrap");
 require("./fontawesome");
 
-window.Vue = require('vue');
+window.Vue = require("vue");
 
-
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component(
+    "example-component",
+    require("./components/ExampleComponent.vue").default
+);
 
 // bodyの文字数をリアルタイムで表示する。
 // 3行分それぞれ書いたけど、まとめる方法があると思うんだよね。。。
@@ -18,21 +20,21 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 // 対処法不明。
 
 var app = new Vue({
-    el: '#app1',
+    el: "#app1",
     data: {
-        myText: ''
+        myText: ""
     },
     computed: {
-        remaining: function () {
+        remaining: function() {
             return 15 - this.myText.length;
         },
-        computedColor: function () {
-            col = '#33a';
+        computedColor: function() {
+            col = "#33a";
             if (this.remaining < 5) {
-                col = '#3a3';
+                col = "#3a3";
             }
             if (this.remaining < 1) {
-                col = '#a33';
+                col = "#a33";
             }
             return col;
         }
@@ -40,21 +42,21 @@ var app = new Vue({
 });
 
 var app = new Vue({
-    el: '#app2',
+    el: "#app2",
     data: {
-        myText: ''
+        myText: ""
     },
     computed: {
-        remaining: function () {
+        remaining: function() {
             return 15 - this.myText.length;
         },
-        computedColor: function () {
-            col = '#33a';
+        computedColor: function() {
+            col = "#33a";
             if (this.remaining < 5) {
-                col = '#3a3';
+                col = "#3a3";
             }
             if (this.remaining < 1) {
-                col = '#a33';
+                col = "#a33";
             }
             return col;
         }
@@ -62,21 +64,21 @@ var app = new Vue({
 });
 
 var app = new Vue({
-    el: '#app3',
+    el: "#app3",
     data: {
-        myText: ''
+        myText: ""
     },
     computed: {
-        remaining: function () {
+        remaining: function() {
             return 15 - this.myText.length;
         },
-        computedColor: function () {
-            col = '#33a';
+        computedColor: function() {
+            col = "#33a";
             if (this.remaining < 5) {
-                col = '#3a3';
+                col = "#3a3";
             }
             if (this.remaining < 1) {
-                col = '#a33';
+                col = "#a33";
             }
             return col;
         }

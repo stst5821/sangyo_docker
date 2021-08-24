@@ -17,7 +17,7 @@
         "kanazaca/counter-cache": "1.0.*",
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "2.0",
+        "laravel/ui": "2.*",
         "laravelcollective/html": "6.*",
         "phpunit/phpunit": "^9.5"
     },
