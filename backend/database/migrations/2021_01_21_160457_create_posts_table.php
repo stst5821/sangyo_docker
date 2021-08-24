@@ -21,7 +21,7 @@ class CreatePostsTable extends Migration
             $table->string('body1',15);
             $table->string('body2',15);
             $table->string('body3',15);
-            $table->string('is_deleted');
+            $table->string('is_deleted')->default(0);
             $table->timestamps();
         });
     }

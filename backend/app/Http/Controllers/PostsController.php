@@ -114,7 +114,7 @@ class PostsController extends Controller
         ];
         
         $post = new Post;
-        // まとめたデータをfillでsaveする。
+        // まとめたデータをfillでsaveする。Postのfillableで指定していないカラムはsaveできない。
         $post->fill($savedata)->save();
 
         return redirect('/post')->with('poststatus','新規投稿しました');
