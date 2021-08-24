@@ -68,6 +68,3 @@ Route::resource('comment', 'CommentsController',['only' => ['store','destroy']])
 
 Route::post('/posts/{post}/likes','LikesController@store')->name('likes.store');
 Route::post('/posts/{post}/likes/{like}','LikesController@destroy')->name('likes.destroy');
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
