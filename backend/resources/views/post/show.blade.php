@@ -1,33 +1,35 @@
-@extends('layouts.app')
-
-@section('title', 'LaravelPjt BBS 投稿の詳細ページ')
+@extends('layouts.app') @section('title', 'LaravelPjt BBS 投稿の詳細ページ')
 @section('keywords', 'キーワード1,キーワード2,キーワード3')
-@section('description', '投稿詳細ページの説明文')
-@section('pageCss')
-<link href="/css/post/style.css" rel="stylesheet">
-@endsection
-
-@section('content')
+@section('description', '投稿詳細ページの説明文') @section('pageCss')
+<link href="/css/post/style.css" rel="stylesheet" />
+@endsection @section('content')
 <div class="container mt-4">
-
     <!-- 戻るボタン -->
     <div class="mt-4 mb-4">
-        <a href="{{route('post.index')}}" class="btn btn-info">一覧に戻る</a>
+        <a href="{{ route('post.index') }}" class="btn btn-info">一覧に戻る</a>
     </div>
-
 
     <div class="mb-4 text-right">
         @can('update', $post)
-        <!-- 編集ボタン -->
-        <a href="{{ action('PostsController@edit', $post->id) }}" class="btn btn-info">
+
+        <!-- 編集ボタン いいね機能があるためomitした。有効にする場合は、削除ボタンを参考に大かっこをつけるのを忘れないようにする。 -->
+        <!-- <a href=" action('PostsController@edit', $post->id) " class="btn btn-info">
             編集する
-        </a>
+        </a> -->
 
         <!-- 削除ボタン -->
-        <form style="display: inline-block;" method="POST" action="{{ action('PostsController@destroy', $post->id) }}">
-            @csrf
-            @method('DELETE')
-            <button onclick="return confirm('投稿を削除しますか？')" class="btn btn-danger">削除する</button>
+        <form
+            style="display: inline-block;"
+            method="POST"
+            action="{{ action('PostsController@destroy', $post->id) }}"
+        >
+            @csrf @method('DELETE')
+            <button
+                onclick="return confirm('投稿を削除しますか？')"
+                class="btn btn-danger"
+            >
+                削除する
+            </button>
         </form>
         @endcan
     </div>
@@ -35,12 +37,11 @@
     <!-- コメント投稿のフラッシュメッセージ -->
     @if (session('commentstatus'))
     <div class="alert alert-success mt-4 mb-4">
-        {{ session('commentstatus') }}
+        {{ session("commentstatus") }}
     </div>
     @endif
 
     <div class="border p-4">
-
         <!-- 件名 -->
         <h1 class="h4 mb-4">
             {{ $post->subject }}
@@ -48,35 +49,34 @@
 
         <!-- 本文 -->
         <p class="mb-5">
-            ・{!! nl2br(e($post->body1)) !!}<br>
-            ・{!! nl2br(e($post->body2)) !!}<br>
+            ・{!! nl2br(e($post->body1)) !!}<br />
+            ・{!! nl2br(e($post->body2)) !!}<br />
             ・{!! nl2br(e($post->body3)) !!}
         </p>
 
         <!-- 投稿情報 -->
         <div class="summary">
-            <p><span>{{ $post->getUserName() }}</span> / <time>{{ $post->updated_at->format('Y.m.d H:i') }}</time> /
-                カテゴリ：{{ $post->category->name }} / ID:{{ $post->id }}</p>
+            <p>
+                <span>{{ $post->getUserName() }}</span> /
+                <time>{{ $post->updated_at->format('Y.m.d H:i') }}</time> /
+                カテゴリ：{{ $post->category->name }} / ID:{{ $post->id }}
+            </p>
         </div>
 
-        @if (Auth::check())
-        @if ($like)
+        @if (Auth::check()) @if ($like)
         {{ Form::model($post, array('action' => array('LikesController@destroy', $post->id, $like->id))) }}
         <button type="submit">
             <i class="fas fa-heart pink-heart"></i>
             {{ $post->likes_count }}
         </button>
-        {!! Form::close() !!}
-        @else
+        {!! Form::close() !!} @else
         {{ Form::model($post, array('action' => array('LikesController@store', $post->id))) }}
         <button type="submit">
             <i class="far fa-heart pink-heart"></i>
             {{ $post->likes_count }}
         </button>
-        {!! Form::close() !!}
-        @endif
-        @endif
-        <br>
+        {!! Form::close() !!} @endif @endif
+        <br />
         <!-- コメント -->
 
         <section>
@@ -88,8 +88,7 @@
             <div class="border-top p-4">
                 <time class="text-secondary">
                     {{ $comment->user->username }} /
-                    {{ $comment->created_at->format('Y.m.d H:i') }} /
-                    ID:{{ $comment->id }}
+                    {{ $comment->created_at->format('Y.m.d H:i') }} / ID:{{ $comment->id }}
                 </time>
                 <p class="mt-2">
                     {!! nl2br(e($comment->comment)) !!}
@@ -97,14 +96,20 @@
 
                 @can('destroy', $comment)
                 <!-- 削除ボタン -->
-                <form style="display: inline-block;" method="POST"
-                    action="{{ action('CommentsController@destroy', $comment->id) }}">
-                    @csrf
-                    @method('DELETE')
-                    <button onclick="return confirm('コメントを削除しますか？')" class="btn btn-danger">削除する</button>
+                <form
+                    style="display: inline-block;"
+                    method="POST"
+                    action="{{ action('CommentsController@destroy', $comment->id) }}"
+                >
+                    @csrf @method('DELETE')
+                    <button
+                        onclick="return confirm('コメントを削除しますか？')"
+                        class="btn btn-danger"
+                    >
+                        削除する
+                    </button>
                 </form>
                 @endcan
-
             </div>
             @empty
             <p>コメントはまだありません。</p>
@@ -115,16 +120,20 @@
         <form class="mb-4" method="POST" action="{{ route('comment.store') }}">
             @csrf
 
-            <input name="post_id" type="hidden" value="{{ $post->id }}">
+            <input name="post_id" type="hidden" value="{{ $post->id }}" />
 
             <div class="form-group">
                 <label for="body">
                     コメント内容
                 </label>
 
-                <textarea id="comment" name="comment"
+                <textarea
+                    id="comment"
+                    name="comment"
                     class="form-control {{ $errors->has('comment') ? 'is-invalid' : '' }}"
-                    rows="4">{{ old('comment') }}</textarea>
+                    rows="4"
+                    >{{ old("comment") }}</textarea
+                >
                 @if ($errors->has('comment'))
                 <div class="invalid-feedback">
                     {{ $errors->first('comment') }}

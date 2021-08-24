@@ -56,9 +56,9 @@ Route::post('/upload','SettingController@upload')->name('upload');
 // 画像一覧
 Route::get('/list','ImageListController@show')->name('image_list');
 
-// 投稿
+// 投稿(edit,updateはいいね機能があるため、omit)
 
-Route::resource('post', 'PostsController', ['only' => ['index', 'show','create','store','edit','update','destroy']]);
+Route::resource('post', 'PostsController', ['only' => ['index', 'show','create','store','destroy']]);
 
 // コメント
 
