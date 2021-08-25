@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 //get関数 第一引数でURLを指定、第二引数には関連付ける処理をする。
 // ここでは無名関数(クロージャ)が指定されている。クロージャ内にはviewヘルパ関数で[welcome]の名前のviewを呼び出す処理を記述している。
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'PostsController@index');
 
 // ['verify' => true]をつけて、メール認証を有効にする。
 // Auth\VerificationControllerにロジックがある。

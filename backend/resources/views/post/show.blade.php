@@ -148,9 +148,10 @@
             </div>
         </form>
 
-        @else
+        <!-- 未ログインだとshow画面に入れないようにしたのでコメントアウト -->
+        <!-- @else
         <p>ログインするとコメントができます。</p>
-        @endif
+        @endif -->
     </div>
 </div>
 @endsection

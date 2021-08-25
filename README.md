@@ -6,8 +6,13 @@
 
 - ユーザーを削除したら、投稿した post や comment が削除されるかチェック
 
-- 投稿を削除すると、エラーが出る
-  Call to undefined method App\Post::comments()
+- mail 認証の mail 内容を修正する。Laravel から送られてきたみたいになっている。
+
+- show 画面のいいねを JS で書き直す
+
+- footer 作成し、github や qiita などのリンクを貼る
+
+- どういう流れで作ったか解説を QIITA に載せる
 
 ## ローカルサイト
 
