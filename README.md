@@ -1,23 +1,8 @@
-## やること
+## 使用技術
 
-- Docker 版 sangyo を別リポジトリで github に push
-
-- 投稿画面の文字列カウント機能が動いていないので、fix する
-
-- ユーザーを削除したら、投稿した post や comment が削除されるかチェック
-
-- mail 認証の mail 内容を修正する。Laravel から送られてきたみたいになっている。
-
-- show 画面のいいねを JS で書き直す
-
-- footer 作成し、github や qiita などのリンクを貼る
-
-- どういう流れで作ったか解説を QIITA に載せる
-
-## ローカルサイト
-
-MAMP 版
-http://localhost/sangyo/public/
+- Laravel 7.30.4
+- PHP 7.4.22
+- postgreSQL 12.7
 
 ## 機能
 

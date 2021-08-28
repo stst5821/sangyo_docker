@@ -1,8 +1,11 @@
+<!DOCTYPE html>
 <!-- ('layoutsディレクトリのapp.bladeを使うという意味') -->
-@extends('layouts.app') @section('title', 'LaravelPjt BBS 投稿の一覧ページ')
+@extends('layouts.app') 
+@section('title', 'LaravelPjt BBS 投稿の一覧ページ')
 @section('keywords', 'キーワード1,キーワード2,キーワード3')
 @section('description', '投稿一覧ページの説明文') @section('pageCss')
-@endsection @section('content')
+@endsection
+@section('content')
 
 <div class="table-responsive">
     <!-- 新規投稿 -->

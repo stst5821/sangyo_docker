@@ -5,6 +5,8 @@
 @section('description', '投稿ページの説明文')
 @section('pageCss')
 <link href="/css/post/style.css" rel="stylesheet">
+
+
 @endsection
 
 
