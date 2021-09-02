@@ -36,6 +36,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- vue.jsのCDN -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js" defer></script>
+    <!-- トランスパイルしたJSをBladeに読み込ませる -->
     <script src="{{ mix('/js/app.js') }}" defer></script>
 </body>
 

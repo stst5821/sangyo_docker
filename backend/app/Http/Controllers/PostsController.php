@@ -164,4 +164,27 @@ class PostsController extends Controller
 
         return redirect('/post')->with('poststatus','投稿を削除しました。');
     }
+
+    public function like(Request $request, Post $post)
+    {
+        // detachしてからattachすることで、二重にいいねされるのを防ぐ。
+        // すでにいいねされていたらdetachしてからattachするので、いいねは1つしかつかない。
+        $post->likes()->detach($request->user()->id);
+        $post->likes()->attach($request->user()->id);
+
+        return [
+            'id' => $post->id,
+            'countLikes' => $post->count_likes
+        ];
+    }
+
+    public function unlike(Request $request, Post $post)
+    {
+        $post->likes()->detach($request->user()->id);
+
+        return [
+            'id' => $post->id,
+            'countLikes' => $post->count_likes
+        ];
+    }
 }

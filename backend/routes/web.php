@@ -64,5 +64,10 @@ Route::resource('comment', 'CommentsController',['only' => ['store','destroy']])
 
 // いいね
 
-Route::post('/posts/{post}/likes','LikesController@store')->name('likes.store');
-Route::post('/posts/{post}/likes/{like}','LikesController@destroy')->name('likes.destroy');
+// Route::post('/posts/{post}/likes','LikesController@store')->name('likes.store');
+// Route::post('/posts/{post}/likes/{like}','LikesController@destroy')->name('likes.destroy');
+
+Route::prefix('posts')->name('posts.')->group(function () {
+  Route::put('/{post}/likes', 'PostsController@like')->name('like')->middleware('auth');
+  Route::delete('/{post}/likes', 'PostsController@unlike')->name('unlike')->middleware('auth');
+});

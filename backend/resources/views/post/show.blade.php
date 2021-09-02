@@ -55,6 +55,7 @@
         </p>
 
         <!-- 投稿情報 -->
+        
         <div class="summary">
             <p>
                 <span>{{ $post->getUserName() }}</span> /
@@ -63,19 +64,18 @@
             </p>
         </div>
 
-        @if (Auth::check()) @if ($like)
-        {{ Form::model($post, array('action' => array('LikesController@destroy', $post->id, $like->id))) }}
-        <button type="submit">
-            <i class="fas fa-heart pink-heart"></i>
-            {{ $post->likes_count }}
-        </button>
-        {!! Form::close() !!} @else
-        {{ Form::model($post, array('action' => array('LikesController@store', $post->id))) }}
-        <button type="submit">
-            <i class="far fa-heart pink-heart"></i>
-            {{ $post->likes_count }}
-        </button>
-        {!! Form::close() !!} @endif @endif
+        <!-- いいね機能 -->
+
+        <!-- :initial-is-liked-byは、v-bindの省略形 -->
+        <!-- jsonを使うことで、結果を値ではなく文字列としてvueコンポーネントに渡している。 -->
+
+        <article-like
+        :initial-is-liked-by='@json($post->isLikedBy(Auth::user()))'
+        :initial-count-likes='@json($post->count_likes)'
+        :authorized='@json(Auth::check())'
+        endpoint="{{ route('posts.like',['post' => $post]) }}">
+      </article-like>
+
         <br />
         <!-- コメント -->
 
