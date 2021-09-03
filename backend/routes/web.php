@@ -19,6 +19,7 @@ Route::get('/', 'PostsController@index');
 
 // ['verify' => true]をつけて、メール認証を有効にする。
 // Auth\VerificationControllerにロジックがある。
+
 Auth::routes(['verify' => true]);
 
 // indexは省略してアクセスできるようにするのが一般的なので、/home/indexとはせず、/homeだけにしている。

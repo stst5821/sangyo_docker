@@ -1,9 +1,9 @@
 <template>
     <div>
-        <button type="button" class="btn m-0 p-1 shadow-none">
+        <button type="button" class="btn m-0 p-1 shadow-none" @click="clickLike">
             <i class="fas fa-heart mr-1"
             :class="{'text-danger':this.isLikedBy}"
-            @click="clickLike" />
+             />
         </button>
         {{countLikes}}
     </div>
@@ -13,7 +13,7 @@
 // show.blade.phpで、initial-is-liked-byに渡した値が、プロパティのinitialsLikedByに渡される。
 export default {
     props: {
-        initialsLikedBy:{
+        initialIsLikedBy:{
             type:Boolean,
             default:false,
         },
@@ -33,8 +33,9 @@ export default {
     // そのため、isLikedByを定義して使用する。
     data() {
         return {
-            isLikedBy:this.initialsLikedBy,
-            countLikes:this.initialCountLikes
+            isLikedBy:this.initialIsLikedBy,
+            countLikes:this.initialCountLikes,
+            
         }
     },
     methods: {
@@ -47,6 +48,8 @@ export default {
         this.isLikedBy
           ? this.unlike()
           : this.like()
+
+        console.log(this.isLikedBy);
       },
       async like() {
         const response = await axios.put(this.endpoint)
@@ -62,4 +65,5 @@ export default {
       },
     },
 }
+
 </script>
