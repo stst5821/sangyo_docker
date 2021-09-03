@@ -30,11 +30,11 @@
             @yield('content')
         </main>
     </div>
-
+    
+    <!-- トランスパイルしたJSをBladeに読み込ませる -->
+    <script src="{{ mix('/js/app.js') }}"></script>
     <!-- navのプルダウンを有効にするため、以下のjqueryとbootstrapのCDNを読み込んでいる -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <!-- トランスパイルしたJSをBladeに読み込ませる -->
-    <script src="{{ mix('/js/app.js') }}" defer></script>
 </body>
 
 </html>
