@@ -74,9 +74,13 @@
         :initial-count-likes='@json($post->count_likes)'
         :authorized='@json(Auth::check())'
         endpoint="{{ route('posts.like',['post' => $post]) }}">
-      </article-like>
+        </article-like>
 
+        @guest
+        <p class="text-danger">いいねするには<a href="{{ route('login')}}">ログイン</a>してください。</p>
+        @endguest
         <br />
+
         <!-- コメント -->
 
         <section>
@@ -116,42 +120,39 @@
             @endforelse
         </section>
 
-        @if(Auth::check())
+        @auth
         <form class="mb-4" method="POST" action="{{ route('comment.store') }}">
             @csrf
-
             <input name="post_id" type="hidden" value="{{ $post->id }}" />
-
             <div class="form-group">
                 <label for="body">
                     コメント内容
                 </label>
-
                 <textarea
                     id="comment"
                     name="comment"
                     class="form-control {{ $errors->has('comment') ? 'is-invalid' : '' }}"
                     rows="4"
-                    >{{ old("comment") }}</textarea
-                >
+                    >{{ old("comment") }}
+                </textarea>
                 @if ($errors->has('comment'))
                 <div class="invalid-feedback">
                     {{ $errors->first('comment') }}
                 </div>
                 @endif
             </div>
-
             <div class="mt-4">
                 <button type="submit" class="btn btn-primary">
                     コメントする
                 </button>
             </div>
         </form>
+        @endauth
 
-        <!-- 未ログインだとshow画面に入れないようにしたのでコメントアウト -->
-        <!-- @else
-        <p>ログインするとコメントができます。</p>
-        @endif -->
+        @guest
+        <p class="text-danger">コメントをするには<a href="{{ route('login')}}">ログイン</a>してください。</p>
+        @endguest
+
     </div>
 </div>
 @endsection
