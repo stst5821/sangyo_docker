@@ -17,6 +17,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/post/style.css') }}" />
 
 </head>
@@ -29,6 +30,7 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <x-footer />
     </div>
     
     <!-- トランスパイルしたJSをBladeに読み込ませる -->

@@ -1,0 +1,22 @@
+$themeColor: #90CE9C;
+$themeSubColor:#487C38;
+
+footer {
+  text-decoration: none;
+  position: absolute;/*←絶対位置*/
+  bottom: 0; /*下に固定*/
+}
+
+.themeColor {
+  background-color: $themeColor;
+}
+
+.themeSubColor {
+  background-color: $themeSubColor;
+}
+
+.button_subColor {
+  background-color: $themeSubColor;
+  border-color: $themeSubColor;
+  color: #fff;
+}

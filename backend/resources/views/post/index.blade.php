@@ -8,17 +8,7 @@
 @section('content')
 
 <div class="table-responsive">
-    <!-- 新規投稿 -->
-    <div class="my-1">
-        <!-- ログインしているときだけ、新規投稿ボタンを表示させる。 -->
-        @if(Auth::check())
-        <a href="{{ route('post.create') }}" class="btn btn-primary">
-            投稿の新規作成
-        </a>
-        @else
-        <p>ログインすると新規投稿できます。</p>
-        @endif
-    </div>
+    
 
     <!-- 登録完了のメッセージ -->
     @if (session('poststatus'))
