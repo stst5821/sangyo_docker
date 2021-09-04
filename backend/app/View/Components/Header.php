@@ -27,15 +27,9 @@ class Header extends Component
             'category' => Request::input('category', ''),
             'keyword'  => Request::input('keyword', ''),
         ];
-
-        // Header ユーザーネーム左のimage画像取得
-
-        $user = User::find(Auth::user()->id); // 現在ログインしているユーザーのIDを使って、userテーブルからレコードを持ってくる。
-        $uploads = UploadImage::find($user->img_id); // $userのimage_idカラムのデータを使って、uploadimageからレコードを持ってくる。
         
         return view('components.header')
             ->with('defaults', $defaults)
-            ->with('categories', $categories)
-            ->with('uploads', $uploads);
+            ->with('categories', $categories);
     }
 }
