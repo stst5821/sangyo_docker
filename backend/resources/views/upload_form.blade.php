@@ -1,14 +1,9 @@
-@extends('layouts.app')
-
-@section('content')
-
-
+<x-app>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Image_change') }}</div>
-
                 <div class="card-body">
                     <form method="post" action="{{ route('upload') }}" enctype="multipart/form-data">
                         @csrf
@@ -24,27 +19,19 @@
                         </div>
                         @endif
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Change') }}
-                                </button>
-                            </div>
+                    <div class="form-group row mb-0">
+                        <div class="col-md-6 offset-md-4">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Change') }}
+                            </button>
                         </div>
+                    </div>
                 </div>
             </div>
-
-
-
             </form>
-
-
-
-
-
         </div>
     </div>
 </div>
 </div>
 </div>
-@endsection
+</x-app>

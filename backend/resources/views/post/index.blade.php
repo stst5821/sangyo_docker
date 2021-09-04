@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<!-- ('layoutsディレクトリのapp.bladeを使うという意味') -->
-@extends('layouts.app') 
-@section('title', 'LaravelPjt BBS 投稿の一覧ページ')
-@section('keywords', 'キーワード1,キーワード2,キーワード3')
-@section('description', '投稿一覧ページの説明文') @section('pageCss')
-@endsection
-@section('content')
+<x-app>
 
 <div class="table-responsive">
     <!-- 新規投稿 -->
@@ -79,4 +72,4 @@
         {{ $posts->withQueryString()->links() }}
     </div>
 </div>
-@endsection
+</x-app>
