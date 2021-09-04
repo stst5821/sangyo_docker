@@ -22,14 +22,12 @@
 </head>
 
 <body>
-    <div id="app">
-        <!-- ヘッダーコンポーネント -->
-        <x-header />
-        <!-- コンテンツの中身を表示 -->
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+    <!-- ヘッダーコンポーネント -->
+    <x-header />
+    <!-- コンテンツの中身を表示 -->
+    <main class="py-4">
+        {{$slot}}
+    </main>
     
     <!-- トランスパイルしたJSをBladeに読み込ませる -->
     <script src="{{ mix('/js/app.js') }}"></script>

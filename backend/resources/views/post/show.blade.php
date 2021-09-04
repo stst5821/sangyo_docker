@@ -1,8 +1,5 @@
-@extends('layouts.app') @section('title', 'LaravelPjt BBS 投稿の詳細ページ')
-@section('keywords', 'キーワード1,キーワード2,キーワード3')
-@section('description', '投稿詳細ページの説明文') @section('pageCss')
+<x-app>
 <link href="/css/post/style.css" rel="stylesheet" />
-@endsection @section('content')
 <div class="container mt-4">
     <!-- 戻るボタン -->
     <div class="mt-4 mb-4">
@@ -155,4 +152,4 @@
 
     </div>
 </div>
-@endsection
+</x-app>
