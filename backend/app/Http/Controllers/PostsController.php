@@ -16,8 +16,9 @@ class PostsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('index');
-        $this->middleware('verified')->except('index');
+        // 未ログインでも閲覧できるページを指定する
+        $this->middleware('auth')->except('index','show');
+        $this->middleware('verified')->except('index','show');
     }
 
     public function index(Request $request)
@@ -78,10 +79,10 @@ class PostsController extends Controller
     public function show(Request $request,$id)
     {
         $post = Post::findOrFail($id);
-        $like = $post->likes()->where('user_id', Auth::user()->id)->first();
+        // $like = $post->likes()->where('user_id', Auth::user()->id)->first();
         return view('post.show',[
             'post' => $post,
-            'like' => $like,
+            // 'like' => $like,
         ]);
     }
 
@@ -163,5 +164,28 @@ class PostsController extends Controller
         $post->delete(); // 投稿の削除
 
         return redirect('/post')->with('poststatus','投稿を削除しました。');
+    }
+
+    public function like(Request $request, Post $post)
+    {
+        // detachしてからattachすることで、二重にいいねされるのを防ぐ。
+        // すでにいいねされていたらdetachしてからattachするので、いいねは1つしかつかない。
+        $post->likes()->detach($request->user()->id);
+        $post->likes()->attach($request->user()->id);
+
+        return [
+            'id' => $post->id,
+            'countLikes' => $post->count_likes
+        ];
+    }
+
+    public function unlike(Request $request, Post $post)
+    {
+        $post->likes()->detach($request->user()->id);
+
+        return [
+            'id' => $post->id,
+            'countLikes' => $post->count_likes
+        ];
     }
 }

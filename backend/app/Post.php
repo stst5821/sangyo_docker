@@ -5,6 +5,7 @@ namespace App;
 use App\Like;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Post extends Model
 {
@@ -41,13 +42,33 @@ class Post extends Model
 
     public function likes()
     {
-        return $this->hasMany('App\Like');
+        // return $this->hasMany('App\Like');
+        // belongsToManyの第一引数には、関係するモデル名。第二引数には中間テーブルのテーブル名を渡す。
+        // likesテーブルには、created_at、updated_atカラムが存在するため、withTimestamps()メソッドをつけている。
+        return $this->belongsToMany('App\User', 'likes')->withTimestamps();
     }
 
-    public function like_by()
+    // 引数の前に?をつけると、その引数がnullでも許容される。
+    public function isLikedBy(?User $user):bool
     {
-        return Like::where('user_id', Auth::user()->id)->first();
+        // 記事をいいねしたユーザーの中に、引数として渡されたユーザーがいるかどうか調べる。
+        // (bool)は、型キャストというPHPの機能。boolと書くことで変数をtrueかfalseに変換する。
+        // この場合、$userがいればtrueが返り、いなければfalseが返る。
+        return $user
+            ?(bool)$this->likes->where('id',$user->id)->count()
+            :false;
     }
+
+    // アクセサ。このメソッドを使うときは、$post->count_likesという書き方をする。
+    public function getCountLikesAttribute():int
+    {
+        return $this->likes->count();
+    }
+
+    // public function like_by()
+    // {
+    //     return Like::where('user_id', Auth::user()->id)->first();
+    // }
 
     // いいね機能 ここまで
 
