@@ -1,10 +1,18 @@
 $themeColor: #90CE9C;
 $themeSubColor:#487C38;
 
+body {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
 footer {
   text-decoration: none;
-  position: absolute;/*←絶対位置*/
-  bottom: 0; /*下に固定*/
 }
 
 .themeColor {
