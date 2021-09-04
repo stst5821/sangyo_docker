@@ -55,6 +55,7 @@
         </p>
 
         <!-- 投稿情報 -->
+        
         <div class="summary">
             <p>
                 <span>{{ $post->getUserName() }}</span> /
@@ -63,20 +64,23 @@
             </p>
         </div>
 
-        @if (Auth::check()) @if ($like)
-        {{ Form::model($post, array('action' => array('LikesController@destroy', $post->id, $like->id))) }}
-        <button type="submit">
-            <i class="fas fa-heart pink-heart"></i>
-            {{ $post->likes_count }}
-        </button>
-        {!! Form::close() !!} @else
-        {{ Form::model($post, array('action' => array('LikesController@store', $post->id))) }}
-        <button type="submit">
-            <i class="far fa-heart pink-heart"></i>
-            {{ $post->likes_count }}
-        </button>
-        {!! Form::close() !!} @endif @endif
+        <!-- いいね機能 -->
+
+        <!-- :initial-is-liked-byは、v-bindの省略形 -->
+        <!-- jsonを使うことで、結果を値ではなく文字列としてvueコンポーネントに渡している。 -->
+
+        <article-like
+        :initial-is-liked-by='@json($post->isLikedBy(Auth::user()))'
+        :initial-count-likes='@json($post->count_likes)'
+        :authorized='@json(Auth::check())'
+        endpoint="{{ route('posts.like',['post' => $post]) }}">
+        </article-like>
+
+        @guest
+        <p class="text-danger">いいねするには<a href="{{ route('login')}}">ログイン</a>してください。</p>
+        @endguest
         <br />
+
         <!-- コメント -->
 
         <section>
@@ -116,42 +120,39 @@
             @endforelse
         </section>
 
-        @if(Auth::check())
+        @auth
         <form class="mb-4" method="POST" action="{{ route('comment.store') }}">
             @csrf
-
             <input name="post_id" type="hidden" value="{{ $post->id }}" />
-
             <div class="form-group">
                 <label for="body">
                     コメント内容
                 </label>
-
                 <textarea
                     id="comment"
                     name="comment"
                     class="form-control {{ $errors->has('comment') ? 'is-invalid' : '' }}"
                     rows="4"
-                    >{{ old("comment") }}</textarea
-                >
+                    >{{ old("comment") }}
+                </textarea>
                 @if ($errors->has('comment'))
                 <div class="invalid-feedback">
                     {{ $errors->first('comment') }}
                 </div>
                 @endif
             </div>
-
             <div class="mt-4">
                 <button type="submit" class="btn btn-primary">
                     コメントする
                 </button>
             </div>
         </form>
+        @endauth
 
-        <!-- 未ログインだとshow画面に入れないようにしたのでコメントアウト -->
-        <!-- @else
-        <p>ログインするとコメントができます。</p>
-        @endif -->
+        @guest
+        <p class="text-danger">コメントをするには<a href="{{ route('login')}}">ログイン</a>してください。</p>
+        @endguest
+
     </div>
 </div>
 @endsection
