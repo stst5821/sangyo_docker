@@ -4,25 +4,18 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 use App\Category;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
+use App\UploadImage;
 
 class Header extends Component
 {
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         //
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\View\View|string
-     */
     public function render()
     {
         // viewで表示するカテゴリ名を取得する。
@@ -35,9 +28,14 @@ class Header extends Component
             'keyword'  => Request::input('keyword', ''),
         ];
 
+        // Header ユーザーネーム左のimage画像取得
 
+        $user = User::find(Auth::user()->id); // 現在ログインしているユーザーのIDを使って、userテーブルからレコードを持ってくる。
+        $uploads = UploadImage::find($user->img_id); // $userのimage_idカラムのデータを使って、uploadimageからレコードを持ってくる。
+        
         return view('components.header')
             ->with('defaults', $defaults)
-            ->with('categories', $categories);
+            ->with('categories', $categories)
+            ->with('uploads', $uploads);
     }
 }

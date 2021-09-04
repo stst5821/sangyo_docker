@@ -1,0 +1,33 @@
+$themeColor: #90CE9C;
+$themeSubColor:#487C38;
+
+body {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  a {
+    text-decoration: none;
+    color: #000;
+  }
+}
+
+.themeColor {
+  background-color: $themeColor;
+}
+
+.themeSubColor {
+  background-color: $themeSubColor;
+}
+
+.button_subColor {
+  background-color: $themeSubColor;
+  border-color: $themeSubColor;
+  color: #fff;
+}

@@ -21,4 +21,5 @@ mix.sourceMaps()
     )
     .sourceMaps()
     .sass("resources/sass/app.scss", "public/css")
+    .sass("resources/sass/layout.scss", "public/css")
     .version(); // JSのトランスパイルの都度、idを採番する。ブラウザのキャッシュに以前読み込んだJSが残っていると古いJSを使ってしまうが、都度IDを採番することによりそれを防いでいる。

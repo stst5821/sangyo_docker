@@ -17,18 +17,18 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/post/style.css') }}" />
 
 </head>
 
 <body>
-    <!-- ヘッダーコンポーネント -->
     <x-header />
-    <!-- コンテンツの中身を表示 -->
     <main class="py-4">
         {{$slot}}
     </main>
-    
+    <x-footer />
+
     <!-- トランスパイルしたJSをBladeに読み込ませる -->
     <script src="{{ mix('/js/app.js') }}"></script>
     <!-- navのプルダウンを有効にするため、以下のjqueryとbootstrapのCDNを読み込んでいる -->

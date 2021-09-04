@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light shadow-sm themeColor">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/post') }}">
             <img src="{{ asset('/img/titleLogo1.png') }}" alt="" />
@@ -63,6 +63,18 @@
                 <!-- 検索フォームここまで -->
             </ul>
 
+            <!-- 新規投稿 -->
+            <div class="my-1">
+                <!-- ログインしているときだけ、新規投稿ボタンを表示させる。 -->
+                @if(Auth::check())
+                <a href="{{ route('post.create') }}" class="btn button_subColor">
+                    新規投稿
+                </a>
+                @else
+                <p>ログインすると新規投稿できます。</p>
+                @endif
+            </div>
+
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
@@ -98,15 +110,6 @@
                         class="dropdown-menu dropdown-menu-right"
                         aria-labelledby="navbarDropdown"
                     >
-                        <a
-                            class="dropdown-item"
-                            href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();"
-                        >
-                            {{ __("Logout") }}
-                        </a>
-
                         <a class="dropdown-item" href="{{ route('setting') }}">
                             {{ __("myPage") }}
                         </a>
@@ -125,6 +128,15 @@
                             href="{{ route('password.form') }}"
                         >
                             {{ __("Change Password") }}
+                        </a>
+
+                        <a
+                            class="dropdown-item"
+                            href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();"
+                        >
+                            {{ __("Logout") }}
                         </a>
                     </div>
                 </li>
