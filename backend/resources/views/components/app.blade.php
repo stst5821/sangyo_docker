@@ -23,13 +23,11 @@
 </head>
 
 <body>
-    <div id="app">
     <x-header />
     <main class="py-4">
         {{$slot}}
     </main>
     <x-footer />
-    </div>
 
     <!-- トランスパイルしたJSをBladeに読み込ませる -->
     <script src="{{ mix('/js/app.js') }}"></script>
