@@ -3,7 +3,7 @@
 <div class="container mt-4">
     <!-- 戻るボタン -->
     <div class="mt-4 mb-4">
-        <a href="{{ route('post.index') }}" class="btn btn-info">一覧に戻る</a>
+        <a href="{{ route('post.index') }}" class="btn button_subColor"><i class="fas fa-arrow-left"></i>  TOPに戻る</a>
     </div>
 
     <div class="mb-4 text-right">
@@ -130,9 +130,7 @@
                     id="comment"
                     name="comment"
                     class="form-control {{ $errors->has('comment') ? 'is-invalid' : '' }}"
-                    rows="4"
-                    >{{ old("comment") }}
-                </textarea>
+                    rows="4">{{ old("comment") }}</textarea>
                 @if ($errors->has('comment'))
                 <div class="invalid-feedback">
                     {{ $errors->first('comment') }}
@@ -140,7 +138,7 @@
                 @endif
             </div>
             <div class="mt-4">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn button_subColor">
                     コメントする
                 </button>
             </div>

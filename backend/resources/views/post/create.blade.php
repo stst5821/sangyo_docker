@@ -98,7 +98,6 @@
                         <!-- @をつけないと、laravelのbladeの記述とかぶってしまって、エラーが出る。  -->
                         <p v-bind:style="{color: computedColor}">@{{ remaining }}/15文字</p>
                     </div>
-
                 </div>
 
                 <div class="mt-5">
@@ -106,7 +105,7 @@
                         キャンセル
                     </a>
 
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn button_subColor">
                         投稿する
                     </button>
                 </div>
