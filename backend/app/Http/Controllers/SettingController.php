@@ -79,6 +79,12 @@ class SettingController extends Controller
     public function showChangeMailForm()
     {
         $auth = Auth::user();
+
+        // guestログインした状態で、直接URLにsetting/emailを入れて飛んでもルートに戻す
+        // if(Auth::id() == 5) {
+        //     return redirect('/');
+        // }
+
         return view('setting.email',['auth' => $auth]);        
     }
 
@@ -93,9 +99,9 @@ class SettingController extends Controller
         }
 
         $user->email = $request->get('email');
-        $user->email_verified_at = null;
-        $user->save();
-        $user->sendEmailVerificationNotification();
+        $user->email_verified_at = null; // 新しいメールアドレスの認証を要求するため、email_verified_atをnullに変更する
+        $user->fill($request->validated())->save();
+        $user->sendEmailVerificationNotification(); // 認証用メールを送るメソッド
         
         return redirect()->route('setting')->with('status', __('Your email has been changed.'));
     }

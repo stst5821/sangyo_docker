@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +18,11 @@ use Illuminate\Support\Facades\Route;
 // ここでは無名関数(クロージャ)が指定されている。クロージャ内にはviewヘルパ関数で[welcome]の名前のviewを呼び出す処理を記述している。
 Route::get('/', 'PostsController@index');
 
+// ゲストログイン
+Route::get('guest', 'Auth\LoginController@guestLogin')->name('login.guest');
+
 // ['verify' => true]をつけて、メール認証を有効にする。
 // Auth\VerificationControllerにロジックがある。
-
 Auth::routes(['verify' => true]);
 
 // indexは省略してアクセスできるようにするのが一般的なので、/home/indexとはせず、/homeだけにしている。

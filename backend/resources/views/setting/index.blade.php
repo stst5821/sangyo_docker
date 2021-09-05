@@ -12,6 +12,10 @@
                     </div>
                     @endif
 
+                    @if (Auth::id() == 5)
+                    <p class="text-danger text-center">※ゲストユーザーは、ユーザー名とメールアドレスを編集できません。</p>
+                    @endif
+
                     @if (!$auth->email_verified_at)
                     <div class="alert alert-warning" role="alert">
                         {{ __('Before proceeding, please check your email for a verification link.') }}
@@ -59,7 +63,11 @@
                         <!-- ユーザー名 -->
 
                         <a href="{{ route('username.form')}}"
-                            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center 
+                            @if (Auth::id() == 5)
+                                disabled
+                            @endif
+                            ">
                             <dl class="mb-0">
                                 <dt>{{ __('UserName') }}</dt>
                                 <dd class="mb-0">{{ $auth->username }}</dd>
@@ -71,7 +79,7 @@
 
                         <!-- メールアドレス -->
 
-                        <a href="{{ route('email.form') }}" @if ($auth->email_verified_at)
+                        <a href="{{ route('email.form') }}" @if ($auth->email_verified_at && Auth::id() !== 5)
                             class="list-group-item list-group-item-action d-flex justify-content-between
                             align-items-center"
                             @else
