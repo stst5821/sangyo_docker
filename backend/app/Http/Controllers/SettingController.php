@@ -81,9 +81,9 @@ class SettingController extends Controller
         $auth = Auth::user();
 
         // guestログインした状態で、直接URLにsetting/emailを入れて飛んでもルートに戻す
-        // if(Auth::id() == 5) {
-        //     return redirect('/');
-        // }
+        if(Auth::id() == 5) {
+            return redirect('/');
+        }
 
         return view('setting.email',['auth' => $auth]);        
     }
