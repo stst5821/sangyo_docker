@@ -48,6 +48,7 @@
                                 <input id="username" type="text"
                                     class="form-control @error('username') is-invalid @enderror" name="username"
                                     value="{{ old('username') }}" required autocomplete="username">
+                                    <span class="text-secondary small">※ユーザー名はアルファベット、英数字のみ使用可能</span>
                                 @error('username')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
