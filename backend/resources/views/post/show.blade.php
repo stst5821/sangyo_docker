@@ -65,13 +65,14 @@
 
         <!-- :initial-is-liked-byは、v-bindの省略形 -->
         <!-- jsonを使うことで、結果を値ではなく文字列としてvueコンポーネントに渡している。 -->
-
-        <article-like
-        :initial-is-liked-by='@json($post->isLikedBy(Auth::user()))'
-        :initial-count-likes='@json($post->count_likes)'
-        :authorized='@json(Auth::check())'
-        endpoint="{{ route('posts.like',['post' => $post]) }}">
-        </article-like>
+        <div id="app">
+            <article-like
+            :initial-is-liked-by='@json($post->isLikedBy(Auth::user()))'
+            :initial-count-likes='@json($post->count_likes)'
+            :authorized='@json(Auth::check())'
+            endpoint="{{ route('posts.like',['post' => $post]) }}">
+            </article-like>
+        </div>
 
         @guest
         <p class="text-danger">いいねするには<a href="{{ route('login')}}">ログイン</a>してください。</p>
