@@ -40,7 +40,7 @@
                             </div>
                         </div>
 
-                        <!-- 名前入力欄 -->
+                        <!-- username入力欄 -->
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">ユーザー名</label>

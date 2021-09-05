@@ -7,7 +7,8 @@
 ## 機能
 
 【実装済】
-
+- ゲストユーザーログイン機能
+  - ゲストユーザーのメールアドレスを変更不可にする。
 - 投稿データを表示(ペジーネーション付)
 - 各レコードの詳細、削除リンク
 - 新規投稿リンク
@@ -15,10 +16,10 @@
 - カテゴリで絞り込み
 - タイトルが長い場合、抜粋表示する
 - 削除ボタンクリック時、確認ダイアログを出す
+- いいね機能
 
 【未実装】
 
-- いいね数
 - 本文(body1,2,3)でもキーワード検索
 
 【実装しない】
@@ -76,5 +77,13 @@ data: {
 ```
 <input maxlength='15'>
 ```
+
+参考サイト
+
+ゲストログイン機能（かんたんログイン）の実装
+https://qiita.com/nasuB7373/items/5b00007c4f73dd55e0cb
+
+共通のバリデーションメッセージを修正する
+https://qiita.com/gone0021/items/68f0563ac2852ad96b14#%E5%85%B1%E9%80%9A%E3%81%AE%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%A1%E3%83%83%E3%82%BB%E3%83%BC%E3%82%B8%E3%82%92%E7%B7%A8%E9%9B%86%E3%81%99%E3%82%8B
 
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>

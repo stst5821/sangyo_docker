@@ -95,6 +95,7 @@ return [
     'numeric'              => ':attributeには、数字を指定してください。',
     'present'              => ':attributeが存在していません。',
     'regex'                => ':attributeに正しい形式を指定してください。',
+    'regex_username'       => ':attributeはアルファベットを数字のみで指定してください。',
     'required'             => ':attributeは必ず指定してください。',
     'required_if'          => ':otherが:valueの場合、:attributeも指定してください。',
     'required_unless'      => ':otherが:valuesでない場合、:attributeを指定してください。',
@@ -129,8 +130,8 @@ return [
     */
 
     'custom' => [
-        '属性名' => [
-            'ルール名' => 'カスタムメッセージ',
+        'username' => [
+            'regex' => 'ユーザー名はアルファベットと数字のみ指定可能です。',
         ],
     ],
 
