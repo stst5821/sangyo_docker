@@ -10,7 +10,7 @@
                         @csrf
                         <h2>{{ __('This will deactivate your account.') }}</h2>
                         <p>{{ __('Press the Deactive button to continue the process.') }}</p>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn button_subColor">
                             {{ __('Deactive') }}
                         </button>
                     </form>

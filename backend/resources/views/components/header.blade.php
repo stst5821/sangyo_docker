@@ -54,7 +54,7 @@
 
                         <!-- 検索ボタン -->
                         <div class="input-group-append">
-                            <button type="submit" class="btn btn-outline-dark">
+                            <button type="submit" class="btn button_subColor btn-outline-dark">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>

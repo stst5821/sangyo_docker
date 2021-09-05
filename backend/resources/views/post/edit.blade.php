@@ -103,7 +103,7 @@
                         キャンセル
                     </a>
 
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn button_subColor">
                         編集する
                     </button>
                 </div>
