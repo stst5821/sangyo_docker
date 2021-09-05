@@ -40,7 +40,7 @@
                             </div>
                         </div>
 
-                        <!-- 名前入力欄 -->
+                        <!-- username入力欄 -->
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">ユーザー名</label>
@@ -48,6 +48,7 @@
                                 <input id="username" type="text"
                                     class="form-control @error('username') is-invalid @enderror" name="username"
                                     value="{{ old('username') }}" required autocomplete="username">
+                                    <span class="text-secondary small">※ユーザー名はアルファベット、英数字のみ使用可能</span>
                                 @error('username')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
