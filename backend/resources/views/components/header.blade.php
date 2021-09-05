@@ -30,7 +30,6 @@
                             <select class="custom-select" name="category">
                                 <option value="">全て</option>
                                 @foreach($categories as $id => $name)
-
                                 <!-- 検索後も、カテゴリ選択が保持される。 -->
                                 <!-- $defaults['category']がnullでなく、defaults['category']と$nameが同じだったら、中身を実行。 -->
                                 @if((!empty($defaults['category']) &&
@@ -106,13 +105,18 @@
                         {{ Auth::user()->username }} <span class="caret"></span>
                     </a>
 
+
                     <div
                         class="dropdown-menu dropdown-menu-right"
                         aria-labelledby="navbarDropdown"
                     >
+                        <!-- マイページ -->
+
                         <a class="dropdown-item" href="{{ route('setting') }}">
                             {{ __("myPage") }}
                         </a>
+
+                        <!-- ログアウト -->
 
                         <form
                             id="logout-form"
@@ -122,14 +126,6 @@
                         >
                             @csrf
                         </form>
-
-                        <a
-                            class="dropdown-item"
-                            href="{{ route('password.form') }}"
-                        >
-                            {{ __("Change Password") }}
-                        </a>
-
                         <a
                             class="dropdown-item"
                             href="{{ route('logout') }}"
