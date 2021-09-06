@@ -1,15 +1,11 @@
 <x-app>
-
 <div class="table-responsive">
-    
-
     <!-- 登録完了のメッセージ -->
     @if (session('poststatus'))
     <div class="alert alert-success mt-4 mb-4">
         {{ session("poststatus") }}
     </div>
     @endif
-
     <div class="container-fluid">
         <div class="row">
             @foreach ($posts as $post)
@@ -39,7 +35,6 @@
                             <!-- count()は、最初から用意されているクエリビルダ。これを使うとEloquentのコレクションからもデータを取り出せる？ -->
                             コメント：{{ $post->comment->count() }}
                         </p>
-
                         by:<a
                             href="#"
                             class="card-link"
@@ -56,7 +51,6 @@
         <!-- row -->
     </div>
     <!-- container -->
-
     <div class="d-flex justify-content-center mb-5">
         <!-- withQueryString()で、現在のクエリ文字列値をすべてペジネーションリンクへ追加する。自分でクエリ文字列を指定したい場合は、appendsを使う。 -->
         {{ $posts->withQueryString()->links() }}

@@ -38,6 +38,15 @@ class Post extends Model
         return $this->belongsTo('App\Category');
     }
 
+    public function escape(string $value)
+    {
+        return str_replace(
+            ['\\', '%', '_'],
+            ['\\\\', '\\%', '\\_'],
+            $value
+        );
+    }
+
     // いいね機能
 
     public function likes()
