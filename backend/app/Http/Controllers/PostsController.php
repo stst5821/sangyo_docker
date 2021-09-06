@@ -21,13 +21,12 @@ class PostsController extends Controller
         $this->middleware('verified')->except('index','show');
     }
 
-    public function index(Request $request)
+    public function index(Request $request, Post $post, Category $category)
     {
         // queryメソッドに引数を渡さずに呼び出せば、連想配列ですべてのクエリストリングを取得できる。。
         $query = Post::query(); // ここに複数のクエリを保存できる。
 
         // viewで表示する”投稿データ”のカテゴリ名を取得する。検索フォームのカテゴリ名ではないので注意。
-        $category = new Category; // インスタンス作成
         $categories = $category->getLists(); // Category.phpのgetLists()メソッドでカテゴリテーブルからidとnameだけ取得し、$categoriesに代入。
         
         // =============== ここから 検索フォームでカテゴリを入力し、データ送信後の処理 ===============
@@ -40,10 +39,10 @@ class PostsController extends Controller
         }
 
         if($request->filled('keyword')) {
-            $keyword =  '%' . $this->escape($request->input('keyword')). '%';
+            $keyword =  '%' . $post->escape($request->input('keyword')). '%'; // Post.phpにあるescapeメソッドを使用して入力された文字列をエスケープする
             
             // クロージャを使っているが、なぜ使わないといけないか不明。消しても普通に動くのだが。
-            $query->where(function($query) use($keyword) {
+            $query->where(function($query) use($keyword) { // ←これ消しても普通に動く
                 $query->where('subject','LIKE',$keyword); // subject、body1~3に、$keywordが入っている投稿を探す。
                 $query->orWhere('body1','LIKE',$keyword);
                 $query->orWhere('body2','LIKE',$keyword);
@@ -59,19 +58,7 @@ class PostsController extends Controller
         return view('post.index',[
             'posts' => $posts, 
             'categories' => $categories, // 検索前のindex画面で、投稿ごとのカテゴリを表示するためのデータをviewに送っている。検索フォームのカテゴリデータではない。
-            ]);
-    }
-
-    // エスケープメソッド ======================================================================================
-
-
-    private function escape(string $value)
-    {
-        return str_replace(
-            ['\\', '%', '_'],
-            ['\\\\', '\\%', '\\_'],
-            $value
-        );
+        ]);
     }
 
     // 投稿詳細 ======================================================================================
