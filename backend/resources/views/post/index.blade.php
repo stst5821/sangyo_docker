@@ -30,7 +30,8 @@
                         </p>
                         <p>
                             <i class="fas fa-heart pink-heart"></i>
-                            {{ $post->likes_count }}
+                            <!-- Post.phpに書いたアクセサを使っていいね数を取得 -->
+                            {{ $post->count_likes }}
                             <br />
                             <!-- count()は、最初から用意されているクエリビルダ。これを使うとEloquentのコレクションからもデータを取り出せる？ -->
                             コメント：{{ $post->comment->count() }}
