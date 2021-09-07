@@ -17,3 +17,41 @@ const app = new Vue({
         ArticleLike
     }
 });
+
+
+
+var app1 = new Vue({
+    el: "#app1",
+    data: {
+        myText: ""
+    },
+    computed: {
+        remaining: function() {
+            return 15 - this.myText.length;
+        }
+    }
+});
+
+var app2 = new Vue({
+    el: "#app2",
+    data: {
+        myText: ""
+    },
+    computed: {
+        remaining: function() {
+            return 15 - this.myText.length;
+        }
+    }
+});
+
+var app3 = new Vue({
+    el: "#app3",
+    data: {
+        myText: ""
+    },
+    computed: {
+        remaining: function() {
+            return 15 - this.myText.length;
+        }
+    }
+});

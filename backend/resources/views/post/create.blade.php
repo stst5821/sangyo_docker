@@ -53,7 +53,6 @@
                     <!-- 1行目 -->
 
                     <div id="app1">
-
                         <input v-model="myText" id="body1" name="body1"
                             class="form-control {{ $errors->has('body1') ? 'is-invalid' : '' }}" rows="4" type="text"
                             required maxlength='15'>
@@ -64,7 +63,7 @@
                         </div>
                         @endif
                         <!-- @をつけないと、laravelのbladeの記述とかぶってしまって、エラーが出る。  -->
-                        <p v-bind:style="{color: computedColor}">@{{ remaining }}/15文字</p>
+                        <p>@{{ remaining }}/15文字</p>
                     </div>
 
                     <!-- 2行目 -->
@@ -79,7 +78,7 @@
                         </div>
                         @endif
                         <!-- @をつけないと、laravelのbladeの記述とかぶってしまって、エラーが出る。  -->
-                        <p v-bind:style="{color: computedColor}">@{{ remaining }}/15文字</p>
+                        <p>@{{ remaining }}/15文字</p>
 
                     </div>
 
@@ -96,7 +95,7 @@
                         </div>
                         @endif
                         <!-- @をつけないと、laravelのbladeの記述とかぶってしまって、エラーが出る。  -->
-                        <p v-bind:style="{color: computedColor}">@{{ remaining }}/15文字</p>
+                        <p>@{{ remaining }}/15文字</p>
                     </div>
                 </div>
 
