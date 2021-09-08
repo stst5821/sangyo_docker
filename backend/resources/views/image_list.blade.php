@@ -1,4 +1,4 @@
-<a href="{{ route('show.form') }}">Upload</a>
+<a href="{{ route('uploadImg') }}">Upload</a>
 <hr />
 
 @foreach($images as $image)

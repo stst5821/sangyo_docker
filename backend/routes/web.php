@@ -52,7 +52,7 @@ Route::get('/setting/email','SettingController@showChangeMailForm')->name('email
 Route::post('/setting/email','SettingController@ChangeEmail')->name('email.change');
 
 // 画像アップロード
-Route::get('/setting/show','SettingController@imageshow')->name('show.form');
+Route::get('/setting/uploadImg','SettingController@imageshow')->name('uploadImg');
 Route::post('/upload','SettingController@upload')->name('upload');
 
 // 画像一覧

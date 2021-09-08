@@ -48,7 +48,7 @@
 
                         <!-- アイコン -->
 
-                        <a href="{{ route('show.form')}}"
+                        <a href="{{ route('uploadImg')}}"
                             class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                             <dl class="mb-0">
                                 <dt>{{ __('User_Image') }}</dt>

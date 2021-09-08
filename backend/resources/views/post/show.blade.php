@@ -1,11 +1,9 @@
 <x-app>
-<link href="/css/post/style.css" rel="stylesheet" />
 <div class="container mt-4">
     <!-- 戻るボタン -->
     <div class="mt-4 mb-4">
         <a href="{{ route('post.index') }}" class="btn button_subColor"><i class="fas fa-arrow-left"></i>  TOPに戻る</a>
     </div>
-
     <div class="mb-4 text-right">
         @can('update', $post)
 
