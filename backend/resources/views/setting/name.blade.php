@@ -1,6 +1,8 @@
 <x-app>
 <div class="container">
+    
     <div class="row justify-content-center">
+    
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Change Name') }}</div>
@@ -26,11 +28,13 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn button_subColor">
+                                <button type="submit" class="btn button_subColor mr-5">
                                     {{ __('Change') }}
                                 </button>
+                                <a href="{{ route('setting') }}" class="btn bg-danger text-white"><i class="fas fa-arrow-left"></i>  {{ __('return') }}</a>
                             </div>
                         </div>
+                       
                     </form>
 
                 </div>
