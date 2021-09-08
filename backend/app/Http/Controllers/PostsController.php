@@ -80,7 +80,7 @@ class PostsController extends Controller
         // ログインしているユーザーの情報をcreate.viewに送っている。
         $auth = Auth::user();
         $category = new Category;
-        
+
         // prependメソッドで、配列の先頭に任意の項目を追加。必ず配列の最初に追加される。prepend(値,キー)
         $categories = $category->getLists()->prepend('選択','');
         return view('post.create',['categories' => $categories, 'auth' => $auth]);
