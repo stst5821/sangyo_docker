@@ -4,7 +4,7 @@ services:
     container_name: sangyo-app
     build: ./infra/php #docker buildを実行する際の現在の作業ディレクトリ(ビルドコンテキスト)を指定
     volumes: # ホスト側のディレクトリや名前付きボリュームをコンテナ側へマウントしたい時に指定
-      - ./backend:/work # ./backend ディレクトリをappサービスのコンテナ内 /work へマウント
+      - ./backend:/work:delegated # ./backend ディレクトリをappサービスのコンテナ内 /work へマウント
 
   web:
     container_name: sangyo-web
