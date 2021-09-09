@@ -53,6 +53,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
+        // ユーザーIDと投稿記事のユーザーIDが同じかチェックする
         return $user->id === $post->user_id;
     }
 

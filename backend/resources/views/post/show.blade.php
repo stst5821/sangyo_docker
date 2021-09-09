@@ -6,12 +6,6 @@
     </div>
     <div class="mb-4 text-right">
         @can('update', $post)
-
-        <!-- 編集ボタン いいね機能があるためomitした。有効にする場合は、削除ボタンを参考に大かっこをつけるのを忘れないようにする。 -->
-        <!-- <a href=" action('PostsController@edit', $post->id) " class="btn btn-info">
-            編集する
-        </a> -->
-
         <!-- 削除ボタン -->
         <form
             style="display: inline-block;"
@@ -68,7 +62,7 @@
             :initial-is-liked-by='@json($post->isLikedBy(Auth::user()))'
             :initial-count-likes='@json($post->count_likes)'
             :authorized='@json(Auth::check())'
-            endpoint="{{ route('posts.like',['post' => $post]) }}">
+            endpoint="{{ route('posts.like',compact("post")) }}">
             </article-like>
         </div>
 
@@ -83,7 +77,6 @@
             <h2 class="h5 mb-4">
                 コメント
             </h2>
-
             @forelse($post->comment as $comment)
             <div class="border-top p-4">
                 <time class="text-secondary">
@@ -93,7 +86,7 @@
                 <p class="mt-2">
                     {!! nl2br(e($comment->comment)) !!}
                 </p>
-
+                <!-- CommentPolicy.phpのdestroyメソッドに書いたPolicyを見にいっている。 -->
                 @can('destroy', $comment)
                 <!-- 削除ボタン -->
                 <form
@@ -101,6 +94,7 @@
                     method="POST"
                     action="{{ action('CommentsController@destroy', $comment->id) }}"
                 >
+                <!-- HTMLフォームは、put,patch,deleteリクエストを作れないので、LaravelのBladeディレクティブで擬似的に作っている -->
                     @csrf @method('DELETE')
                     <button
                         onclick="return confirm('コメントを削除しますか？')"
@@ -115,7 +109,6 @@
             <p>コメントはまだありません。</p>
             @endforelse
         </section>
-
         @auth
         <form class="mb-4" method="POST" action="{{ route('comment.store') }}">
             @csrf
@@ -142,11 +135,9 @@
             </div>
         </form>
         @endauth
-
         @guest
         <p class="text-danger">コメントをするには<a href="{{ route('login')}}">ログイン</a>してください。</p>
         @endguest
-
     </div>
 </div>
 </x-app>
