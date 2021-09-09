@@ -63,14 +63,10 @@ class PostsController extends Controller
 
     // 投稿詳細 ======================================================================================
 
-    public function show(Request $request,$id)
+    public function show($id)
     {
-        $post = Post::findOrFail($id);
-        // $like = $post->likes()->where('user_id', Auth::user()->id)->first();
-        return view('post.show',[
-            'post' => $post,
-            // 'like' => $like,
-        ]);
+        $post = Post::findOrFail($id); // 引数($id)でレコードが見つかれば値を返し、無ければエラー(ModelNotFoundException)を返す。
+        return view('post.show',compact("post")); // compact関数。変数名とその値から配列を作成する。['post' => $post]と書くのと同じ。
     }
 
     // 新規投稿 ======================================================================================

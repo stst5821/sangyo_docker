@@ -65,8 +65,6 @@ class CommentPolicy
      */
     public function destroy(User $user, Comment $comment)
     {
-        // comment->user_idがなぜか""で囲まれてるから、同じIDだけどfalseになっちゃう。
-        // commentsテーブルのuser_idカラムのデータ型がvarcharになっていたのが原因だった。なにやってんだマジで！！！
         return $user->id === $comment->user_id;
     }
 
