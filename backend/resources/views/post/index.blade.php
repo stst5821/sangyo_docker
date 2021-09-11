@@ -29,7 +29,7 @@
                             ・{{ $post->body3 }}
                         </p>
                         <p>
-                            <i class="fas fa-heart pink-heart"></i>
+                            <i class="fas fa-heart text-danger"></i>
                             <!-- Post.phpに書いたアクセサを使っていいね数を取得 -->
                             {{ $post->count_likes }}
                             <br />

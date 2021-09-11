@@ -6,8 +6,8 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 
 use App\Post;
-use App\Policies\Postpolicy;
-use App\Policies\Commentpolicy;
+use App\Policies\PostPolicy;
+use App\Policies\CommentPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -19,9 +19,8 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
         // ポリシーを登録する。
-        // 'App\Post::class' => 'App\Policies\Postpolicy::class',
-        Post::class => Postpolicy::class,
-        Comment::class => Commentpolicy::class,
+        Post::class => PostPolicy::class,
+        Comment::class => CommentPolicy::class,
     ];
 
     /**

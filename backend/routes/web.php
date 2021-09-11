@@ -3,17 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 //get関数 第一引数でURLを指定、第二引数には関連付ける処理をする。
 // ここでは無名関数(クロージャ)が指定されている。クロージャ内にはviewヘルパ関数で[welcome]の名前のviewを呼び出す処理を記述している。
 Route::get('/', 'PostsController@index');

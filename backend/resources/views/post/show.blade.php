@@ -5,7 +5,7 @@
         <a href="{{ route('post.index') }}" class="btn button_subColor"><i class="fas fa-arrow-left"></i>  TOPに戻る</a>
     </div>
     <div class="mb-4 text-right">
-        @can('update', $post)
+        @can('destroy', $post)
         <!-- 削除ボタン -->
         <form
             style="display: inline-block;"
