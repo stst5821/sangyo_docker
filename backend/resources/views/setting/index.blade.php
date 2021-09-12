@@ -52,8 +52,9 @@
                             class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                             <dl class="mb-0">
                                 <dt>{{ __('User_Image') }}</dt>
-                                <dd class="mb-0"><img src="{{ asset('storage/' . $uploads->file_path) }}"
-                                        style="width:20%;" /></dd>
+                                <dd class="mb-0">
+                                        <img src="{{$path}}" style="width:20%;">
+                                    </dd>
                             </dl>
                             @if ($auth->email_verified_at)
                             <div><i class="fas fa-chevron-right"></i></div>

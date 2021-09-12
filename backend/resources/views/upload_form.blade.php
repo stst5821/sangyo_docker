@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <form method="post" action="{{ route('upload') }}" enctype="multipart/form-data">
                         @csrf
-                        <input type="file" name="image" accept="image/png, image/jpeg">
+                        <input type="file" name="file">
 
                         @if (count($errors) > 0)
                         <div class="alert alert-danger">
