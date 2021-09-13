@@ -82,7 +82,7 @@ class SettingController extends Controller
         $auth = Auth::user();
 
         // guestログインした状態で、直接URLにsetting/emailを入れて飛んでもルートに戻す
-        if(Auth::id() == 5) {
+        if(Auth::id() == 1) {
             return redirect('/');
         }
 
@@ -116,11 +116,9 @@ class SettingController extends Controller
 
     function upload(Request $request)
     {
-        // $request->validate([
-        //     'file' => 'required|file|image|mimes:png,jpeg'
-        // ]);
-
-        // 画像をストレージとDBに登録するだけの処理をしている。画像とユーザーの紐付けはこの後で行う。
+        $request->validate([
+            'file' => 'required|file|image|mimes:png,jpeg'
+        ]);
 
         $user = Auth::user();
 
@@ -136,6 +134,7 @@ class SettingController extends Controller
             "file_path" => $path
         ]);
 
+        // userのimg_idに保存した画像のidを代入
         $user->img_id = $image->id;
         $user->save();
 

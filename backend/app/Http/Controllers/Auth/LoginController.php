@@ -15,7 +15,7 @@ class LoginController extends Controller
     protected $redirectTo = RouteServiceProvider::HOME;
 
     // あらかじめDBに登録してあるゲスト用レコードのidを定数に指定する。
-    private const GUEST_USER_ID = 5;
+    private const GUEST_USER_ID = 1;
 
     // ログイン後のリダイレクト先を指定できる。
     public function redirectPath()
@@ -38,7 +38,7 @@ class LoginController extends Controller
     public function guestLogin()
     {
         if(Auth::loginUsingId(self::GUEST_USER_ID)) {
-            return redirect('/');
+            return redirect('/setting');
         }
         // guestログインが失敗した場合は、topに戻す
         return redirect('/');

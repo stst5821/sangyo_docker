@@ -12,7 +12,7 @@
                     </div>
                     @endif
 
-                    @if (Auth::id() == 5)
+                    @if (Auth::id() == 1)
                     <p class="text-danger text-center">※ゲストユーザーは、ユーザー名とメールアドレスを編集できません。</p>
                     @endif
 
@@ -65,7 +65,7 @@
 
                         <a href="{{ route('username.form')}}"
                             class="list-group-item list-group-item-action d-flex justify-content-between align-items-center 
-                            @if (Auth::id() == 5)
+                            @if (Auth::id() == 1)
                                 disabled
                             @endif
                             ">
@@ -80,7 +80,7 @@
 
                         <!-- メールアドレス -->
 
-                        <a href="{{ route('email.form') }}" @if ($auth->email_verified_at && Auth::id() !== 5)
+                        <a href="{{ route('email.form') }}" @if ($auth->email_verified_at && Auth::id() !== 1)
                             class="list-group-item list-group-item-action d-flex justify-content-between
                             align-items-center"
                             @else
