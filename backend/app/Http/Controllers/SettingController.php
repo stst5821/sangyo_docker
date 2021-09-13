@@ -11,7 +11,6 @@ use App\User;
 use App\UploadImage;
 use Illuminate\Support\Facades\Storage;
 
-
 class SettingController extends Controller
 {
     public function __construct()
@@ -27,10 +26,12 @@ class SettingController extends Controller
         $auth = Auth::user();
         $user = User::find(Auth::user()->id); // 現在ログインしているユーザーのIDを使って、userテーブルからレコードを持ってくる。
         $uploads = UploadImage::find($user->img_id); // $userのimage_idカラムのデータを使って、uploadimageからレコードを持ってくる。
-        
+        $path = Storage::disk('s3')->url($uploads->file_path);
+        // dd($uploads);
+
         return view('setting.index',
             ['auth' => $auth,
-            'uploads' => $uploads
+            'path' => $path
             ]);
     }
 
@@ -81,7 +82,7 @@ class SettingController extends Controller
         $auth = Auth::user();
 
         // guestログインした状態で、直接URLにsetting/emailを入れて飛んでもルートに戻す
-        if(Auth::id() == 5) {
+        if(Auth::id() == 1) {
             return redirect('/');
         }
 
@@ -116,53 +117,25 @@ class SettingController extends Controller
     function upload(Request $request)
     {
         $request->validate([
-            'image' => 'required|file|image|mimes:png,jpeg'
+            'file' => 'required|file|image|mimes:png,jpeg'
         ]);
 
-        // 画像をストレージとDBに登録するだけの処理をしている。画像とユーザーの紐付けはこの後で行う。
-
-        $upload_img = $request->file('image');
-
-        if($upload_img) {
-            // アップロードされた画像をstore関数を使って保存する
-            // store関数を使うと、ファイル名がランダムになる。ファイル名を指定したい場合はstoreAs()関数を利用
-            $path = $upload_img->store('uploads',"public");
-            // 画像の保存に成功したらDBに記録する
-            if($path){
-                // DBに記録する。
-                UploadImage::create([
-                    // getClientOriginalName()でアップロードした元のファイル名が取得できるので、それをfile_nameに代入。
-                    "file_name" => $upload_img->getClientOriginalName(),
-                    "file_path" => $path
-                ]);
-            }
-        }
-
-        // 元から設定していた画像を、ストレージとDBから削除する。
-        
         $user = Auth::user();
-        // Userのimg_idと、upload_imageテーブルのidを紐付け、レコードを取得する。
-        $image_data = UploadImage::find($user->img_id);
-        // 取得したupload_imageのレコードから、file_pathだけ取り出して$image_pathに代入する。
-        $image_path = $image_data->file_path;
 
-        // 元の登録画像がデフォルト画像だった場合は、削除しない。
-        // 削除すると、ユーザー登録した際に設定するデフォルト画像が表示されなくなってしまう。
-        // 1は、デフォルト画像のid
-        if (!$image_data->id == 1){
-        // ストレージのファイルを削除する。
-        Storage::delete('public/' . $image_path);
-        // upload_imageのレコードを削除する。
-        UploadImage::where('id', $image_data->id)->delete();
-        } 
+        $file = $request->file('file');
+
+        // S3にファイルを保存
+        $path = Storage::disk('s3')->putFile('/', $file, 'public');
         
-        // 最初に保存した画像を取り出し、upload_imageのidカラムと、usersのimg_idカラムを紐付ける。
-        
-         // 上記で保存した最新の画像を取得するため、created_atの降順で並べて、一番最初のレコードだけ取ってくる。
-        $image = UploadImage::orderBy('created_at', 'desc')->first();
-        // 取得したレコードのidを、usersテーブルのimg_idに入れる。
+        // DBに画像の名前とパスを保存
+        $image = UploadImage::create([
+            // getClientOriginalName()でアップロードした元のファイル名が取得できるので、それをfile_nameに代入。
+            "file_name" => $file->getClientOriginalName(),
+            "file_path" => $path
+        ]);
+
+        // userのimg_idに保存した画像のidを代入
         $user->img_id = $image->id;
-        
         $user->save();
 
         return redirect( route('setting') );

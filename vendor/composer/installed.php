@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '9f854e3ad41b1dd738da6548c5a6410e67789db7',
+    'reference' => '3140ab8cf4a6b2edeeea8be4a264ebec217c8d5a',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,25 @@
       'aliases' => 
       array (
       ),
-      'reference' => '9f854e3ad41b1dd738da6548c5a6410e67789db7',
+      'reference' => '3140ab8cf4a6b2edeeea8be4a264ebec217c8d5a',
+    ),
+    'aws/aws-crt-php' => 
+    array (
+      'pretty_version' => 'v1.0.2',
+      'version' => '1.0.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '3942776a8c99209908ee0b287746263725685732',
+    ),
+    'aws/aws-sdk-php' => 
+    array (
+      'pretty_version' => '3.193.2',
+      'version' => '3.193.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'd5080f7a1bb63569c19b8de06f787808eca70cc6',
     ),
     'doctrine/inflector' => 
     array (
@@ -46,6 +64,33 @@
       array (
       ),
       'reference' => '0dbf5d78455d4d6a41d186da50adc1122ec066f4',
+    ),
+    'guzzlehttp/guzzle' => 
+    array (
+      'pretty_version' => '7.3.0',
+      'version' => '7.3.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '7008573787b430c1c1f650e3722d9bba59967628',
+    ),
+    'guzzlehttp/promises' => 
+    array (
+      'pretty_version' => '1.4.1',
+      'version' => '1.4.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '8e7d04f1f6450fef59366c399cfad4b9383aa30d',
+    ),
+    'guzzlehttp/psr7' => 
+    array (
+      'pretty_version' => '1.8.2',
+      'version' => '1.8.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'dc960a912984efb74d0a90222870c72c87f10c91',
     ),
     'illuminate/collections' => 
     array (
@@ -137,6 +182,42 @@
       ),
       'reference' => '07d725813350c695c779382cbd6dac0ab8665537',
     ),
+    'league/flysystem' => 
+    array (
+      'pretty_version' => '2.2.3',
+      'version' => '2.2.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '811bdc2d52a07eafbb6cb68a7b368b0668b362c8',
+    ),
+    'league/flysystem-aws-s3-v3' => 
+    array (
+      'pretty_version' => '2.1.0',
+      'version' => '2.1.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '8d8edfe2541d94e6607808e3dd8484734c86eb2a',
+    ),
+    'league/mime-type-detection' => 
+    array (
+      'pretty_version' => '1.7.0',
+      'version' => '1.7.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '3b9dff8aaf7323590c1d2e443db701eb1f9aa0d3',
+    ),
+    'mtdowling/jmespath.php' => 
+    array (
+      'pretty_version' => '2.6.1',
+      'version' => '2.6.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '9b87907a81b87bc76d19a7fb2d61e61486ee9edb',
+    ),
     'nesbot/carbon' => 
     array (
       'pretty_version' => '2.52.0',
@@ -162,6 +243,38 @@
         0 => '1.0',
       ),
     ),
+    'psr/http-client' => 
+    array (
+      'pretty_version' => '1.0.1',
+      'version' => '1.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2dfb5f6c5eff0e91e20e913f8c5452ed95b86621',
+    ),
+    'psr/http-client-implementation' => 
+    array (
+      'provided' => 
+      array (
+        0 => '1.0',
+      ),
+    ),
+    'psr/http-message' => 
+    array (
+      'pretty_version' => '1.0.1',
+      'version' => '1.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'f6561bf28d520154e4b0ec72be95418abe6d9363',
+    ),
+    'psr/http-message-implementation' => 
+    array (
+      'provided' => 
+      array (
+        0 => '1.0',
+      ),
+    ),
     'psr/log-implementation' => 
     array (
       'provided' => 
@@ -177,6 +290,15 @@
       array (
       ),
       'reference' => '408d5eafb83c57f6365a3ca330ff23aa4a5fa39b',
+    ),
+    'ralouphie/getallheaders' => 
+    array (
+      'pretty_version' => '3.0.3',
+      'version' => '3.0.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '120b605dfeb996808c31b6477290a714d356e822',
     ),
     'symfony/console' => 
     array (

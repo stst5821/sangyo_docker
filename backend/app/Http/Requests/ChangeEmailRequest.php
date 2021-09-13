@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ChangeEmailRequest extends FormRequest
 {
-    private const GUEST_USER_ID = 5;
+    private const GUEST_USER_ID = 1;
 
     public function authorize()
     {
