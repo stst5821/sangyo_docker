@@ -121,6 +121,7 @@ class SettingController extends Controller
         ]);
 
         $user = Auth::user();
+        $image_data = UploadImage::find($user->img_id);
 
         $file = $request->file('file');
 
@@ -133,6 +134,11 @@ class SettingController extends Controller
             "file_name" => $file->getClientOriginalName(),
             "file_path" => $path
         ]);
+
+        // デフォルト画像以外なら、現在登録している画像をS3から削除する
+        if ($image_data->id !== 1){
+            Storage::disk('s3')->delete($image_data->file_path);
+        }
 
         // userのimg_idに保存した画像のidを代入
         $user->img_id = $image->id;
