@@ -7,6 +7,7 @@
 ## 機能
 
 【実装済】
+
 - ゲストユーザーログイン機能
   - ゲストユーザーのメールアドレスを変更不可にする。
 - 投稿データを表示(ペジーネーション付)
@@ -20,7 +21,6 @@
 
 【未実装】
 
-
 【実装しない】
 
 - 投稿の編集機能  
@@ -29,27 +29,49 @@
 
 ## 注意事項
 
+### PgAdmin4
+
+#### 使い方
+
+- ログイン方法
+
+以下にアクセス
+http://localhost:81/
+
+mailaddress と password は docker-compose.yml を見る
+
+あとは以下を見ながら進める。
+
+docker compose を使って PostgreSQL を構築する  
+https://mebee.info/2020/12/04/post-24686/
+
+Hostname/address を調べる方法  
+docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' [コンテナ名]
+
+テーブルの確認方法  
+https://postgresweb.com/post-3926
+
 ### Heroku
 
-#### pushする方法
+#### push する方法
 
-- backendディレクトリに移動する
-- git addから、commitまで行う
-- `$ git push heroku main` でpushする
+- backend ディレクトリに移動する
+- git add から、commit まで行う
+- `$ git push heroku main` で push する
 
-#### Herokuで　artisanコマンドを使う方法
+#### Heroku で　 artisan コマンドを使う方法
 
-- `$ heroku run bash` で、以下のように表示が変わればOK
+- `$ heroku run bash` で、以下のように表示が変われば OK
 
 ```
-~$ 
+~$
 ```
 
 ###　その他
 
-#### docker環境でcssが反映されない場合
+#### docker 環境で css が反映されない場合
 
-`$ make app` でappコンテナに入ってから、`$ npm run dev`
+`$ make app` で app コンテナに入ってから、`$ npm run dev`
 
 #### 画像のアップロード機能の注意事項
 
