@@ -9,10 +9,8 @@ services:
   web:
     container_name: sangyo-web
     image: nginx:1.18-alpine #コンテナを起動させるイメージを指定
-
     ports: # nginxへ外(ホスト側)からコンテナ内へアクセスさせるため公開用のポートを設定します。
       - 8080:80 # ホスト側:コンテナ側 と設定。
-
     volumes: # ホスト側にあるディレクトリ、ファイルをコンテナ内へマウントさせています。
       - ./backend:/work
       - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
@@ -42,7 +40,7 @@ services:
     volumes:
       - pgadmin:/var/lib/pgadmin
     depends_on:
-      - postgres
+      - db
 
 volumes:
   db:
