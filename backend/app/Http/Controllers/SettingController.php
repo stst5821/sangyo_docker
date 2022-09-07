@@ -23,16 +23,23 @@ class SettingController extends Controller
 
     public function index()
     {
-        $auth = Auth::user();
-        $user = User::find(Auth::user()->id); // 現在ログインしているユーザーのIDを使って、userテーブルからレコードを持ってくる。
-        $uploads = UploadImage::find($user->img_id); // $userのimage_idカラムのデータを使って、uploadimageからレコードを持ってくる。
-        $path = Storage::disk('s3')->url($uploads->file_path);
-        // dd($uploads);
+        $auth    = Auth::user();
+        $user    = User::find(Auth::user()->id); // 現在ログインしているユーザーのIDを使って、userテーブルからレコードを持ってくる。
 
-        return view('setting.index',
-            ['auth' => $auth,
+        // ローカル
+        $image = UploadImage::find($user->img_id); // $userのimage_idカラムのデータを使って、uploadimageからレコードを持ってくる。
+
+        if ( app()->isLocal() ) {
+            $path = $image->file_path;
+        } else {
+            // 本番
+            $path = Storage::disk('s3')->url($uploads->file_path);
+        }
+
+        return view('setting.index',[
+            'auth' => $auth,
             'path' => $path
-            ]);
+        ]);
     }
 
     // 名前変更
@@ -122,23 +129,38 @@ class SettingController extends Controller
 
         $user = Auth::user();
         $image_data = UploadImage::find($user->img_id);
-
-        $file = $request->file('file');
-
-        // S3にファイルを保存
-        $path = Storage::disk('s3')->putFile('/', $file, 'public');
         
-        // DBに画像の名前とパスを保存
+        if ( app()->isLocal() ) {
+            // ローカル用
+            $upload_img = $request->file('file');
+        } else {
+            // 本番用　S3にファイルを保存
+            $upload_img = $request->file('file');
+            $upload_img = Storage::disk('s3')->putFile('/', $upload_img, 'public');
+
+            // デフォルト画像以外なら、現在登録している画像をS3から削除する
+            if ($image_data->id !== 1){
+                Storage::disk('s3')->delete($image_data->file_path);
+            }
+        }
+
+        if(empty($upload_img)) {
+            return redirect( route('setting') );
+        }
+
+        // store関数を使うと、ファイル名がランダムになる。ファイル名を指定したい場合はstoreAs()関数を利用
+        $path = $upload_img->store('uploads',"public");
+
+        // 画像の保存に成功したらDBに記録する
+        if(empty($path)) {
+            return redirect( route('setting') );
+        }
+
         $image = UploadImage::create([
             // getClientOriginalName()でアップロードした元のファイル名が取得できるので、それをfile_nameに代入。
-            "file_name" => $file->getClientOriginalName(),
+            "file_name" => $upload_img->getClientOriginalName(),
             "file_path" => $path
         ]);
-
-        // デフォルト画像以外なら、現在登録している画像をS3から削除する
-        if ($image_data->id !== 1){
-            Storage::disk('s3')->delete($image_data->file_path);
-        }
 
         // userのimg_idに保存した画像のidを代入
         $user->img_id = $image->id;
