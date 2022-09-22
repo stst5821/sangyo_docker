@@ -30,7 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function upload_image()
     {
-        return $this->hasOne('App\UploadImage');
+        return $this->hasOne('App\UploadImage', 'id', 'img_id');
     }
     
     public function likes()

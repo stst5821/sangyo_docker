@@ -23,13 +23,11 @@ class SettingController extends Controller
 
     public function index()
     {
-        $auth    = Auth::user();
-        $user    = User::find(Auth::user()->id); // 現在ログインしているユーザーのIDを使って、userテーブルからレコードを持ってくる。
-
-        // ローカル
-        $image = UploadImage::find($user->img_id); // $userのimage_idカラムのデータを使って、uploadimageからレコードを持ってくる。
+        $authUser    = Auth::user();
+        $image = $authUser->upload_image;
 
         if ( app()->isLocal() ) {
+            // ローカル
             $path = $image->file_path;
         } else {
             // 本番
@@ -37,7 +35,7 @@ class SettingController extends Controller
         }
 
         return view('setting.index',[
-            'auth' => $auth,
+            'auth' => $authUser,
             'path' => $path
         ]);
     }
