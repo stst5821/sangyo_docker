@@ -44,8 +44,8 @@ class SettingController extends Controller
 
     public function showChangeNameForm()
     {
-        $auth = Auth::user();
-        return view('setting.name',['auth' => $auth]);
+        $authUser = Auth::user();
+        return view('setting.name',['auth' => $authUser]);
     }
 
     public function showChangeImageForm()
@@ -58,11 +58,10 @@ class SettingController extends Controller
 		]);
     }
     
-    public function ChangeName(ChangeNameRequest $request)
+    public function ChangeName(ChangeNameRequest $request, User $user)
     {
-        $user = Auth::user();
-        $user->name = $request->get('name');
-        $user->save();
+        $user->changeName($request);
+        
         return redirect()->route('setting')->with('status', __('Your name has been changed.'));
     }
 
@@ -70,44 +69,44 @@ class SettingController extends Controller
 
     public function showChangeUserNameForm()
     {
-        $auth = Auth::user();
-        return view('setting.username',['auth' => $auth]);
+        $authUser = Auth::user();
+        return view('setting.username',['auth' => $authUser]);
     }
     
     public function ChangeUserName(ChangeUserNameRequest $request)
     {
-        $user = Auth::user();
-        $user->username = $request->get('username');
-        $user->save();
+        $authUser = Auth::user();
+        $authUser->username = $request->get('username');
+        $authUser->save();
         return redirect()->route('setting')->with('status', __('Your name has been changed.'));
     }
 
     public function showChangeMailForm()
     {
-        $auth = Auth::user();
+        $authUser = Auth::user();
 
         // guestログインした状態で、直接URLにsetting/emailを入れて飛んでもルートに戻す
         if(Auth::id() == 1) {
             return redirect('/');
         }
 
-        return view('setting.email',['auth' => $auth]);        
+        return view('setting.email',['auth' => $authUser]);        
     }
 
     public function ChangeEmail(ChangeEmailRequest $request)
     {
-        $user = Auth::user();
+        $authUser = Auth::user();
 
         // 入力されたメルアドが現在のメルアドと同じだったら、変更処理せずsetting.indexにリダイレクトさせる。
-        if($user->email == $request->get('email'))
+        if($authUser->email == $request->get('email'))
         {
             return redirect()->route('setting')->with('status', __('Your email has been changed.'));
         }
 
-        $user->email = $request->get('email');
-        $user->email_verified_at = null; // 新しいメールアドレスの認証を要求するため、email_verified_atをnullに変更する
-        $user->fill($request->validated())->save();
-        $user->sendEmailVerificationNotification(); // 認証用メールを送るメソッド
+        $authUser->email = $request->get('email');
+        $authUser->email_verified_at = null; // 新しいメールアドレスの認証を要求するため、email_verified_atをnullに変更する
+        $authUser->fill($request->validated())->save();
+        $authUser->sendEmailVerificationNotification(); // 認証用メールを送るメソッド
         
         return redirect()->route('setting')->with('status', __('Your email has been changed.'));
     }
@@ -125,8 +124,8 @@ class SettingController extends Controller
             'file' => 'required|file|image|mimes:png,jpeg'
         ]);
 
-        $user = Auth::user();
-        $image_data = UploadImage::find($user->img_id);
+        $authUser = Auth::user();
+        $image_data = UploadImage::find($authUser->img_id);
         
         if ( app()->isLocal() ) {
             // ローカル用
@@ -161,8 +160,8 @@ class SettingController extends Controller
         ]);
 
         // userのimg_idに保存した画像のidを代入
-        $user->img_id = $image->id;
-        $user->save();
+        $authUser->img_id = $image->id;
+        $authUser->save();
 
         return redirect( route('setting') );
     }

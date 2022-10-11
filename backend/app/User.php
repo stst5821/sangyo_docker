@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -38,7 +39,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Like::class);
     }
 
+    public function changeName($request)
+    {
+        if (empty($request)) {
+            return;
+        }
 
+        $authUser = Auth::user();
+        $authUser->name = $request->get('name');
+        $authUser->save();
+
+        return;
+    }
 
     // ローカルスコープ。PostControllerのindexアクションのカテゴリで絞り込むために使う。
     public function scopeCategoryAt($query, $category_id)
