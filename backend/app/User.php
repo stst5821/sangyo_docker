@@ -39,6 +39,21 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Like::class);
     }
 
+    public function getImagePath($authUser)
+    {
+        $image = $authUser->upload_image;
+
+        if ( app()->isLocal() ) {
+            // ローカル
+            $path = $image->file_path;
+        } else {
+            // 本番
+            $path = Storage::disk('s3')->url($uploads->file_path);
+        }
+
+        return $path;
+    }
+
     public function changeName($request)
     {
         if (empty($request)) {

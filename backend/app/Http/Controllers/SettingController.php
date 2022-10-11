@@ -21,22 +21,14 @@ class SettingController extends Controller
         $this->middleware('verified')->except('index');
     }
 
-    public function index()
+    public function index(User $user)
     {
         $authUser    = Auth::user();
-        $image = $authUser->upload_image;
-
-        if ( app()->isLocal() ) {
-            // ローカル
-            $path = $image->file_path;
-        } else {
-            // 本番
-            $path = Storage::disk('s3')->url($uploads->file_path);
-        }
+        $imagePath = $user->getImagePath($authUser);
 
         return view('setting.index',[
             'auth' => $authUser,
-            'path' => $path
+            'path' => $imagePath
         ]);
     }
 
