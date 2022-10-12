@@ -54,6 +54,47 @@ class User extends Authenticatable implements MustVerifyEmail
         return $path;
     }
 
+    public function storeImage($request)
+    {
+        $authUser = Auth::user();
+        $image = UploadImage::find($authUser->img_id);
+        
+        if ( app()->isLocal() ) {
+            // ローカル用
+            $uploadImg = $request->file('file');
+        } else {
+            // 本番用　S3にファイルを保存
+            $uploadImg = Storage::disk('s3')->putFile('/', $request->file('file'), 'public');
+
+            // デフォルト画像以外なら、現在登録している画像をS3から削除する
+            if ($image->id !== 1){
+                Storage::disk('s3')->delete($image->file_path);
+            }
+        }
+
+        if(empty($uploadImg)) {
+            return redirect( route('setting') );
+        }
+
+        // store関数を使うと、ファイル名がランダムになる。ファイル名を指定したい場合はstoreAs()関数を利用
+        $path = $uploadImg->store('uploads',"public");
+
+        if(empty($path)) {
+            return redirect( route('setting') );
+        }
+        
+        // 画像の保存に成功したらDBに記録する
+        $image = UploadImage::create([
+            // getClientOriginalName()でアップロードした元のファイル名が取得できるので、それをfile_nameに代入。
+            "file_name" => $uploadImg->getClientOriginalName(),
+            "file_path" => $path
+        ]);
+
+        // userのimg_idに保存した画像のidを代入
+        $authUser->img_id = $image->id;
+        $authUser->save();
+    }
+
     public function changeName($request)
     {
         if (empty($request)) {
