@@ -30,18 +30,18 @@ Route::post('/setting/deactive', 'Auth\DeactiveController@deactive')->name('deac
 
 // 氏名変更
 Route::get('/setting/name','SettingController@showChangeNameForm')->name('name.form');
-Route::post('/setting/name','SettingController@ChangeName')->name('name.change');
+Route::post('/setting/name','SettingController@changeName')->name('name.change');
 
 // ユーザーネーム変更
 Route::get('/setting/username','SettingController@showChangeUserNameForm')->name('username.form');
-Route::post('/setting/username','SettingController@ChangeUserName')->name('username.change');
+Route::post('/setting/username','SettingController@changeUserName')->name('username.change');
 
 // メールアドレス変更
 Route::get('/setting/email','SettingController@showChangeMailForm')->name('email.form');
-Route::post('/setting/email','SettingController@ChangeEmail')->name('email.change');
+Route::post('/setting/email','SettingController@changeEmail')->name('email.change');
 
 // 画像アップロード
-Route::get('/setting/uploadImg','SettingController@imageshow')->name('uploadImg');
+Route::get('/setting/uploadImg','SettingController@imageShow')->name('uploadImg');
 Route::post('/upload','SettingController@upload')->name('upload');
 
 // 画像一覧
