@@ -50,7 +50,7 @@ class SettingController extends Controller
 		]);
     }
     
-    public function ChangeName(ChangeNameRequest $request, User $user)
+    public function changeName(ChangeNameRequest $request, User $user)
     {
         $user->changeName($request);
         
@@ -62,14 +62,13 @@ class SettingController extends Controller
     public function showChangeUserNameForm()
     {
         $authUser = Auth::user();
+        
         return view('setting.username',['auth' => $authUser]);
     }
     
-    public function ChangeUserName(ChangeUserNameRequest $request)
+    public function changeUserName(ChangeUserNameRequest $request, User $user)
     {
-        $authUser = Auth::user();
-        $authUser->username = $request->get('username');
-        $authUser->save();
+        $user->changeUserName($request);
         return redirect()->route('setting')->with('status', __('Your name has been changed.'));
     }
 
@@ -85,7 +84,7 @@ class SettingController extends Controller
         return view('setting.email',['auth' => $authUser]);        
     }
 
-    public function ChangeEmail(ChangeEmailRequest $request)
+    public function changeEmail(ChangeEmailRequest $request)
     {
         $authUser = Auth::user();
 
@@ -112,6 +111,7 @@ class SettingController extends Controller
 
     function upload(Request $request, User $user)
     {
+        // TODO:validationはファイルを分ける
         $request->validate([
             'file' => 'required|file|image|mimes:png,jpeg'
         ]);

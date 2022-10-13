@@ -82,7 +82,7 @@ class User extends Authenticatable implements MustVerifyEmail
         if(empty($path)) {
             return redirect( route('setting') );
         }
-        
+
         // 画像の保存に成功したらDBに記録する
         $image = UploadImage::create([
             // getClientOriginalName()でアップロードした元のファイル名が取得できるので、それをfile_nameに代入。
@@ -103,6 +103,19 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $authUser = Auth::user();
         $authUser->name = $request->get('name');
+        $authUser->save();
+
+        return;
+    }
+
+    public function changeUserName($request)
+    {
+        if (empty($request)) {
+            return;
+        }
+
+        $authUser = Auth::user();
+        $authUser->username = $request->get('username');
         $authUser->save();
 
         return;
